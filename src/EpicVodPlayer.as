@@ -7,7 +7,6 @@ package
 	import com.vhall.framework.load.ResourceLibrary;
 	
 	import flash.display.DisplayObject;
-	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.system.ApplicationDomain;
 	import flash.system.Security;

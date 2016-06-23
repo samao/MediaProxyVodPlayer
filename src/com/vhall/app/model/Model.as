@@ -1,8 +1,7 @@
 package com.vhall.app.model
 {
-	import com.vhall.app.model.info.MeetingInfo;
+	import com.vhall.app.model.info.DocActionInfo;
 	import com.vhall.app.model.info.PlayerStatusInfo;
-	import com.vhall.app.model.info.UserInfo;
 	import com.vhall.app.model.info.VideoInfo;
 	
 	import flash.utils.describeType;
@@ -38,6 +37,14 @@ package com.vhall.app.model
 			
 			I = this;
 		}
+		/**	当前流数据的信息*/
+		public var videoinfo:VideoInfo;
+		/***播放器状态信息 */		
+		public var playerstatusinfo:PlayerStatusInfo;
+		/**
+		 *文档打点数据 
+		 */		
+		public var docActionInfo:DocActionInfo ;
 		
 		public function init(data:Object):void
 		{
@@ -103,6 +110,32 @@ package com.vhall.app.model
 					}
 				}
 			}
+		}
+		
+		/**
+		 *视频信息 
+		 * @return 
+		 * 
+		 */		
+		public static function get videoInfo():VideoInfo{
+			return Me().videoinfo;
+		}
+		
+		/**
+		 *状态信息 
+		 * @return 
+		 * 
+		 */		
+		public static function get playerStatusInfo():PlayerStatusInfo{
+			return Me().playerstatusinfo;
+		}
+		/**
+		 *文档打点数据 
+		 * @return 
+		 * 
+		 */		
+		public static function get docActionInfo():DocActionInfo{
+			return Me().docActionInfo;
 		}
 	}
 }
