@@ -44,7 +44,7 @@ package com.vhall.app.model
 		/**
 		 *文档打点数据 
 		 */		
-		public var docActionInfo:DocActionInfo ;
+		public var docactioninfo:DocActionInfo ;
 		
 		public function init(data:Object):void
 		{
@@ -135,7 +135,7 @@ package com.vhall.app.model
 		 * 
 		 */		
 		public static function get docActionInfo():DocActionInfo{
-			return Me().docActionInfo;
+			return Me().docactioninfo;
 		}
 	}
 }

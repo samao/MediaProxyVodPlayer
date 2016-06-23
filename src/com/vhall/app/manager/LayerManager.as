@@ -15,8 +15,6 @@ package com.vhall.app.manager
 		public static var controlLayer:Layer;
 		/**弹幕层*/
 		public static var barrageLayer:Layer;
-		/**	特效层 跑马灯，礼物特效？ 等*/
-		public static var effectLayer:Layer;
 		/**	弹框层*/
 		public static var popupLayer:Layer;
 		
@@ -25,7 +23,6 @@ package com.vhall.app.manager
 			videoLayer = rootLayer.videoLayer;
 			controlLayer = rootLayer.controlLayer;
 			barrageLayer = rootLayer.barrageLayer;
-			effectLayer = rootLayer.effectLayer;
 			popupLayer = rootLayer.popupLayer;
 		}
 		

@@ -2,8 +2,8 @@ package com.vhall.app.model
 {
 	import com.adobe.serialization.json.JSON;
 	import com.vhall.app.net.WebAJMessage;
+	import com.vhall.framework.log.Logger;
 	
-	import flash.external.ExternalInterface;
 	import flash.utils.clearTimeout;
 	import flash.utils.setInterval;
 
@@ -17,7 +17,7 @@ package com.vhall.app.model
 		private static var instance:DocCuepointServer;
 		protected var cuepointLoogUint:uint;
 		protected var currCuepoint:Object;	
-		public static var loopTime:int = 200;
+		public static var loopTime:int = 100;
 		
 		/**
 		 *单例 
@@ -33,6 +33,28 @@ package com.vhall.app.model
 		{
 			//监听当播放时,开始start
 			//监听seek时
+		}
+		
+		/**
+		 * //因为跳转的问题需要清除当页之前所有画笔
+		 * @param jumpPoint
+		 * @return 
+		 * 
+		 */		
+		private function createCeanPage(jumpInfo:String):String{
+			var object:Object = com.adobe.serialization.json.JSON.decode(String(jumpInfo));
+			object.type = "clearAllStroke"
+			return com.adobe.serialization.json.JSON.encode(object);
+		}
+		
+		private function toCheckFilp(data:Object):Boolean{
+			if(data&& data.content && data.content!=""){
+				var cobj:Object = com.adobe.serialization.json.JSON.decode(String(data.content));
+				if(cobj && cobj.type == "flipOver"){
+					return true;
+				}
+			}
+			return false;
 		}
 		
 		
@@ -104,31 +126,12 @@ package com.vhall.app.model
 					WebAJMessage.sendRecordMsg(drawList[j].content);
 				}
 			}catch(e:Error){
-				ExternalInterface.call("console.log", "解析跳转文档数据出错："+ e.errorID + "_"+ e.message);
+				Logger.getLogger("docCuep").info("解析跳转文档数据出错："+ e.errorID + "_"+ e.message);
 			}
 		}
 		
-		/**
-		 * //因为跳转的问题需要清除当页之前所有画笔
-		 * @param jumpPoint
-		 * @return 
-		 * 
-		 */		
-		private function createCeanPage(jumpInfo:String):String{
-			var object:Object = com.adobe.serialization.json.JSON.decode(String(jumpInfo));
-			object.type = "clearAllStroke"
-			return com.adobe.serialization.json.JSON.encode(object);
+		public function destroy():void{
+			clearTimeout(cuepointLoogUint);
 		}
-		
-		private function toCheckFilp(data:Object):Boolean{
-			if(data&& data.content && data.content!=""){
-				var cobj:Object = com.adobe.serialization.json.JSON.decode(String(data.content));
-				if(cobj && cobj.type == "flipOver"){
-					return true;
-				}
-			}
-			return false;
-		}
-		
 	}
 }

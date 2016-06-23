@@ -17,6 +17,7 @@ package com.vhall.app.model
 	 */	
 	public class MediaModel
 	{
+		private static var _instance:MediaModel;
 		/** 禁止摄像头*/
 		public var cameraMute:Boolean = false;
 		/** 禁止麦克风*/
@@ -48,11 +49,6 @@ package com.vhall.app.model
 		public var _soMicrophone:String = "";
 		public var _soCamWidth:uint = 320;
 		public var _soCamHeight:uint = 280;
-		
-		
-		
-		private static var _instance:MediaModel;
-		
 		public function MediaModel()
 		{
 			if(_instance) return;

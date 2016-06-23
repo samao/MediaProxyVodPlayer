@@ -1,4 +1,4 @@
-package com.vhall.app.view.loading
+package com.vhall.app.view.popup.ui
 {
 	import com.vhall.framework.ui.container.Box;
 	

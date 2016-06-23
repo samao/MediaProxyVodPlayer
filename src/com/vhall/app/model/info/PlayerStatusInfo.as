@@ -23,5 +23,7 @@ package com.vhall.app.model.info
 		/***当前播放模式（RTMP/HLS） */		
 		public var playMode:String = PlayMode.PLAY_RTMP;
 		
+		public var hideBarrage:Boolean
+		
 	}
 }
