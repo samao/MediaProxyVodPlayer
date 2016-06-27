@@ -3,19 +3,19 @@ package com.vhall.app.model
 	import com.vhall.app.model.info.DocActionInfo;
 	import com.vhall.app.model.info.PlayerStatusInfo;
 	import com.vhall.app.model.info.VideoInfo;
-	
+
 	import flash.utils.describeType;
 	import flash.utils.getDefinitionByName;
 
 	/**
-	 * 数据模型 
+	 * 数据模型
 	 * @author Sol
-	 * 
+	 *
 	 */	
 	public class Model
 	{
 		private static var I:Model;
-		
+
 		/**	原始数据*/
 		private var originParmeters:Object;
 
@@ -27,14 +27,14 @@ package com.vhall.app.model
 			}
 			return I;
 		}
-		
+
 		public function Model()
 		{
 			if(I)
 			{
 				throw new Error("Model is singlton");
 			}
-			
+
 			I = this;
 		}
 		/**	当前流数据的信息*/
@@ -42,16 +42,16 @@ package com.vhall.app.model
 		/***播放器状态信息 */		
 		public var playerstatusinfo:PlayerStatusInfo;
 		/**
-		 *文档打点数据 
+		 *文档打点数据
 		 */		
 		public var docactioninfo:DocActionInfo ;
-		
+
 		public function init(data:Object):void
 		{
 			this.originParmeters = data;
 			parseData(data,this);
 		}
-		
+
 		// 递归解析数据
 		private function parseData(data:Object, t:*):void
 		{
@@ -60,7 +60,7 @@ package com.vhall.app.model
 			var child:XML;
 			var varName:String = "";
 			var typeName:String = "";
-			
+
 			var attrList:XMLList = xml..variable;
 			// 公共属性
 			for each(child in attrList)
@@ -96,7 +96,7 @@ package com.vhall.app.model
 						break;
 				}
 			}
-			
+
 			var accList:XMLList = xml..accessor;
 			var accessName:String;
 			for each(child in accList)
@@ -111,31 +111,32 @@ package com.vhall.app.model
 				}
 			}
 		}
-		
+
 		/**
-		 *视频信息 
-		 * @return 
-		 * 
+		 *视频信息
+		 * @return
+		 *
 		 */		
 		public static function get videoInfo():VideoInfo{
 			return Me().videoinfo;
 		}
-		
+
 		/**
-		 *状态信息 
-		 * @return 
-		 * 
+		 *状态信息
+		 * @return
+		 *
 		 */		
 		public static function get playerStatusInfo():PlayerStatusInfo{
 			return Me().playerstatusinfo;
 		}
 		/**
-		 *文档打点数据 
-		 * @return 
-		 * 
+		 *打点数据
+		 * @return
+		 *
 		 */		
 		public static function get docActionInfo():DocActionInfo{
 			return Me().docactioninfo;
 		}
 	}
 }
+

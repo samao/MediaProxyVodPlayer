@@ -2,11 +2,9 @@ package com.vhall.app.view.control.ui.progress
 {
 	import com.vhall.framework.ui.container.Box;
 	import com.vhall.framework.ui.event.DragEvent;
-
 	import flash.display.DisplayObjectContainer;
 	import flash.utils.clearTimeout;
 	import flash.utils.setInterval;
-
 	public class PlayProgressBar extends Box
 	{
 
@@ -19,10 +17,12 @@ package com.vhall.app.view.control.ui.progress
 		   *循环标示
 			  */
 		protected var loopUint:uint;
-
+		/**
+		 *timebar
+		 */
 		private var bar:TimeHBar;
 
-		private var ctime:Number = 0;
+		private var ctime:Number=0;
 
 		/**
 		 *停止循环更新时间进度
@@ -51,10 +51,6 @@ package com.vhall.app.view.control.ui.progress
 			bar=new TimeHBar(this);
 			bar.addEventListener(DragEvent.HOVER, onBarHover);
 			bar.addEventListener(DragEvent.CLICK, onBarClick);
-		}
-
-
-		protected function onInitCuePoint():void{
 
 		}
 
@@ -75,6 +71,12 @@ package com.vhall.app.view.control.ui.progress
 			bar.percent=ct / tt;
 		}
 
+		override protected function sizeChanged():void
+		{
+			super.sizeChanged();
+			bar.width=width;
+		}
+
 		/**	点击*/
 		private function onBarClick(e:DragEvent):void
 		{
@@ -86,12 +88,6 @@ package com.vhall.app.view.control.ui.progress
 		private function onBarHover(e:DragEvent):void
 		{
 
-		}
-
-		override protected function sizeChanged():void
-		{
-			super.sizeChanged();
-			bar.width = width;
 		}
 	}
 }
