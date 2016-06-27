@@ -1,6 +1,5 @@
 package com.vhall.app.model.info
 {
-	import com.vhall.app.model.info.vo.DefinitionVo;
 	import com.vhall.app.model.info.vo.ServeLinevo;
 	import com.vhall.framework.log.Logger;
 	import flash.utils.Dictionary;
@@ -31,10 +30,6 @@ package com.vhall.app.model.info
 		 *连接失败的线路
 		 */
 		public var failLines:Dictionary;
-		/**
-		 *选中清晰度
-		 */
-		public var selectDefVo:DefinitionVo;
 
 		/**
 		 *选中线路
@@ -55,10 +50,6 @@ package com.vhall.app.model.info
 		private var _cdnServers:String;
 
 		private var _media_srv:String;
-		/**
-		 *清晰度数据(源数据)
-		 */
-		private var _playItem:String;
 
 		private var _publishServers:String;
 
@@ -115,46 +106,6 @@ package com.vhall.app.model.info
 			_media_srv = value;
 		}
 
-
-		/**
-		 *清晰度数据
-		 */
-		public function get playItem():String
-		{
-			return _playItem;
-		}
-
-		/**
-		 * @private
-		 */
-		public function set playItem(value:String):void
-		{
-			_playItem = value;
-			try
-			{
-
-				var arr:Array = JSON.parse(_playItem) as Array;
-				if(arr && arr.length > 0)
-				{
-					var item:* = arr[0]
-					var def:DefinitionVo = new DefinitionVo("default", item["default"]);
-					var middle:DefinitionVo = new DefinitionVo("middle", item.middle);
-					var low:DefinitionVo = new DefinitionVo("low", item.low);
-					definitionInfo[0] = def;
-					definitionInfo[1] = middle;
-					definitionInfo[2] = low;
-					selectDefVo = definitionInfo[0];
-				}
-			}
-			catch(e:Error)
-			{
-			}
-//			definitionInfo.push(new DefinitionVo("default", {"server":"rtmp://ccrtmplive02.t.vhall.com/vhall","file":"465936505_m"}));
-//			definitionInfo.push(new DefinitionVo("middle", {"server":"rtmp://ccrtmplive02.t.vhall.com/vhall","file":"465936505"}));
-//			definitionInfo.push(new DefinitionVo("low", {"server":"rtmp://ccrtmplive02.t.vhall.com/vhall","file":"465936505_l"}));
-//			selectDefVo = definitionInfo[0];
-		}
-
 		/** 给小助手的推流地址*/
 		public function get publishServers():String
 		{
@@ -207,3 +158,5 @@ package com.vhall.app.model.info
 		}
 	}
 }
+
+
