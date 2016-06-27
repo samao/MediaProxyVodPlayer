@@ -1,5 +1,7 @@
 package com.vhall.app.common.controller
 {
+	import com.vhall.app.net.LiveWebBridge;
+	import com.vhall.app.net.VodWebBridge;
 	import com.vhall.framework.app.common.Controller;
 	import com.vhall.framework.app.net.MessageManager;
 	import com.vhall.framework.log.Logger;
@@ -23,6 +25,8 @@ package com.vhall.app.common.controller
 		{
 			// 注册接收的回调
 			Logger.getLogger("message init").info("initController");
+			//注册消息收发
+			MessageManager.getInstance().initWebBridge(new VodWebBridge());
 			MessageManager.getInstance().addWebCallBack("sendMsgToAs");
 		}
 	}

@@ -22,7 +22,7 @@ package com.vhall.app.view.popup
 			verticalCenter = 0;
 			horizontalCenter = 0;
 		}
-		
+		 
 		override protected function createChildren():void
 		{
 			// TODO Auto Generated method stub

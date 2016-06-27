@@ -1,12 +1,11 @@
 package com.vhall.app.net
 {
 	import com.vhall.framework.app.net.MessageManager;
-	import com.vhall.framework.app.net.WebBridge;
 
 	public class WebAJMessage
 	{
 		
-		private static var sender:WebBridge = MessageManager.getInstance().getBridge();
+		private static var sender:VodWebBridge = MessageManager.getInstance().getBridge() as VodWebBridge;
 			
 		/**
 		 *发送打点数据 
