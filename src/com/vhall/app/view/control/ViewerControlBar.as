@@ -8,6 +8,7 @@ package com.vhall.app.view.control
 	import com.vhall.app.view.control.ui.VolumeBar;
 	import com.vhall.app.view.control.ui.component.SwitchListBox;
 	import com.vhall.app.view.control.ui.component.VideoAudioChangeBtn;
+	import com.vhall.app.view.control.ui.progress.PlayProgressBar;
 	import com.vhall.framework.app.manager.StageManager;
 	import com.vhall.framework.app.mvc.IResponder;
 	import com.vhall.framework.app.mvc.ResponderMediator;
@@ -51,6 +52,8 @@ package com.vhall.app.view.control
 		private var btnFullscreen:ToggleButton;
 		/**	容器*/
 		private var hb:HBox;
+
+		protected var playProgressBar:PlayProgressBar 
 
 		public function careList():Array
 		{
@@ -202,6 +205,8 @@ package com.vhall.app.view.control
 			hb.verticalAlign = "center";
 			hb.horizontalAlign = "right";
 			hb.move(0, 20);
+			playProgressBar = new PlayProgressBar(this);
+			playProgressBar.startLoop();
 
 			// 静音
 			onInitVolume();
@@ -376,6 +381,7 @@ package com.vhall.app.view.control
 			super.sizeChanged();
 			//计算是否需要隐藏控件
 			autoShowHide();
+			playProgressBar.width = StageManager.stageWidth
 		}
 
 		protected function updateVolumeButton():void
