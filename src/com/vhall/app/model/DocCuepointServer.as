@@ -2,6 +2,7 @@ package com.vhall.app.model
 {
 	import com.vhall.app.net.WebAJMessage;
 	import com.vhall.framework.log.Logger;
+
 	import flash.utils.clearTimeout;
 	import flash.utils.setInterval;
 
@@ -71,7 +72,7 @@ package com.vhall.app.model
 			}
 		}
 
-		public function toSeekCuePointInfo(time):void
+		public function toSeekCuePointInfo(time:Number):void
 		{
 			var cues:Array = Model.docActionInfo.cuepoint;
 			if(cues == null || cues.length < 0)
