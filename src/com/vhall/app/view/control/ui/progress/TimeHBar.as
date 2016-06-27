@@ -22,13 +22,6 @@ package  com.vhall.app.view.control.ui.progress
 			super(parent, xpos, ypos);
 		}
 
-		override protected function initSize():void
-		{
-			super.initSize();
-//			this.width = 320;
-//			this.height = 15;
-		}
-
 		override protected function createChildren():void
 		{
 			super.createChildren();
@@ -84,11 +77,11 @@ package  com.vhall.app.view.control.ui.progress
 
 		override protected function initSkin():void
 		{
-			bg.source = ComponentUtils.genInteractiveRect(320, 15, null, 5, 10, 0x111111);
-			buffer.source = ComponentUtils.genInteractiveRect(320, 15, null, 5, 10, 0x111111);
-			finished.source = ComponentUtils.genInteractiveRect(320, 15, null, 5, 10, 0xff0000);
+			super.initSkin();
+			bg.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0x00FFFF);
+			finished.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0xff0000);
 			quad.visible = false;
-			bg.visible = false;
+			buffer.visible = false;
 		}
 
 	}

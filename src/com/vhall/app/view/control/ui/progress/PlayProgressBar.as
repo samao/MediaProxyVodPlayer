@@ -5,10 +5,11 @@ package com.vhall.app.view.control.ui.progress
 	import flash.display.DisplayObjectContainer;
 	import flash.utils.clearTimeout;
 	import flash.utils.setInterval;
+
 	public class PlayProgressBar extends Box
 	{
 
-		public function PlayProgressBar(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0)
+		public function PlayProgressBar(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number = 0)
 		{
 			super(parent, xpos, ypos);
 		}
@@ -22,7 +23,7 @@ package com.vhall.app.view.control.ui.progress
 		 */
 		private var bar:TimeHBar;
 
-		private var ctime:Number=0;
+		private var ctime:Number = 0;
 
 		/**
 		 *停止循环更新时间进度
@@ -31,7 +32,7 @@ package com.vhall.app.view.control.ui.progress
 		public function startLoop():void
 		{
 			stopLoop();
-			loopUint=setInterval(onLoop, 30)
+			loopUint = setInterval(onLoop, 30)
 		}
 
 		/**
@@ -48,9 +49,9 @@ package com.vhall.app.view.control.ui.progress
 			super.createChildren();
 
 			// 进度条
-			bar=new TimeHBar(this);
+			bar = new TimeHBar(this);
 			bar.addEventListener(DragEvent.HOVER, onBarHover);
-			bar.addEventListener(DragEvent.CLICK, onBarClick);
+			bar.addEventListener(DragEvent.UP, onBarClickUp);
 
 		}
 
@@ -60,25 +61,24 @@ package com.vhall.app.view.control.ui.progress
 		 */
 		protected function onLoop():void
 		{
-			// TODO Auto Generated method stub
 			//计算时间
-			var ct:Number=ctime + 0.02;
+			var ct:Number = ctime + 0.02;
 			//如果当前播放时间没有变则返回
-			if (ct == ctime)
+			if(ct == ctime)
 				return;
-			ctime=ct;
-			var tt:Number=30;
-			bar.percent=ct / tt;
+			ctime = ct;
+			var tt:Number = 30;
+			bar.percent = ct / tt;
 		}
 
 		override protected function sizeChanged():void
 		{
 			super.sizeChanged();
-			bar.width=width;
+			bar.width = width;
 		}
 
 		/**	点击*/
-		private function onBarClick(e:DragEvent):void
+		private function onBarClickUp(e:DragEvent):void
 		{
 			stopLoop();
 
