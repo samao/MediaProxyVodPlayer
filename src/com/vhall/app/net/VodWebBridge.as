@@ -1,9 +1,6 @@
 package com.vhall.app.net
 {
 	import com.vhall.framework.app.net.WebBridge;
-	import com.vhall.framework.log.Logger;
-	
-	import flash.external.ExternalInterface;
 	
 	/**
 	 *

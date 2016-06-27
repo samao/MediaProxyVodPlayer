@@ -1,6 +1,5 @@
 package com.vhall.app.common.controller
 {
-	import com.vhall.app.net.LiveWebBridge;
 	import com.vhall.app.net.VodWebBridge;
 	import com.vhall.framework.app.common.Controller;
 	import com.vhall.framework.app.net.MessageManager;
