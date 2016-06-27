@@ -17,12 +17,10 @@ package com.vhall.app.view.control
 	import com.vhall.framework.ui.controls.ToggleButton;
 	import com.vhall.framework.ui.controls.UIComponent;
 	import com.vhall.framework.ui.event.DragEvent;
-
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.FullScreenEvent;
 	import flash.events.MouseEvent;
-
 	import appkit.responders.NResponder;
 
 	public class ViewerControlBar extends AbstractControlBar implements IResponder
@@ -40,6 +38,8 @@ package com.vhall.app.view.control
 		 *是否已经隐藏了组件
 		 */
 		protected var isAutoHide:Boolean = false;
+
+		protected var playProgressBar:PlayProgressBar
 		/**切换线路组件**/
 		protected var serverLinke:SwitchListBox;
 		/**静音按钮*/
@@ -52,8 +52,6 @@ package com.vhall.app.view.control
 		private var btnFullscreen:ToggleButton;
 		/**	容器*/
 		private var hb:HBox;
-
-		protected var playProgressBar:PlayProgressBar 
 
 		public function careList():Array
 		{
