@@ -132,7 +132,7 @@ package com.vhall.app.view.control.ui
 		protected function updateTimeBg():void{
 			timebg.graphics.clear();
 			timebg.graphics.beginFill(0x111111,.8);
-			timebg.graphics.drawRect(0,0,StageManager.stageWidth,20);
+			timebg.graphics.drawRect(0,0,StageManager.stageWidth,15);
 			timebg.graphics.endFill();
 			
 		}
@@ -144,7 +144,7 @@ package com.vhall.app.view.control.ui
 		protected function updateStepBg():void{
 			stepBg.graphics.clear();
 			stepBg.graphics.beginFill(0xff0000,.8);
-			stepBg.graphics.drawRect(0,0,_width*playPercent,20);
+			stepBg.graphics.drawRect(0,0,_width*playPercent,15);
 			stepBg.graphics.endFill();
 		}
 		
@@ -227,7 +227,6 @@ package com.vhall.app.view.control.ui
 			super.destory();
 			stopLoop();
 		}
-		
 		
 	}
 }

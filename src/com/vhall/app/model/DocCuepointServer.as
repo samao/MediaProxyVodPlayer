@@ -3,7 +3,7 @@ package com.vhall.app.model
 	import com.adobe.serialization.json.JSON;
 	import com.vhall.app.net.WebAJMessage;
 	import com.vhall.framework.log.Logger;
-	
+
 	import flash.utils.clearTimeout;
 	import flash.utils.setInterval;
 
@@ -18,35 +18,35 @@ package com.vhall.app.model
 		protected var cuepointLoogUint:uint;
 		protected var currCuepoint:Object;	
 		public static var loopTime:int = 100;
-		
+
 		/**
-		 *单例 
-		 * @return 
-		 * 
+		 *单例
+		 * @return
+		 *
 		 */		
 		public static function getInstance():DocCuepointServer{
 			return instance ||= new DocCuepointServer();
 		}
-		
-		
+
+
 		public function DocCuepointServer()
 		{
 			//监听当播放时,开始start
 			//监听seek时
 		}
-		
+
 		/**
 		 * //因为跳转的问题需要清除当页之前所有画笔
 		 * @param jumpPoint
-		 * @return 
-		 * 
+		 * @return
+		 *
 		 */		
 		private function createCeanPage(jumpInfo:String):String{
 			var object:Object = com.adobe.serialization.json.JSON.decode(String(jumpInfo));
 			object.type = "clearAllStroke"
 			return com.adobe.serialization.json.JSON.encode(object);
 		}
-		
+
 		private function toCheckFilp(data:Object):Boolean{
 			if(data&& data.content && data.content!=""){
 				var cobj:Object = com.adobe.serialization.json.JSON.decode(String(data.content));
@@ -56,15 +56,15 @@ package com.vhall.app.model
 			}
 			return false;
 		}
-		
-		
+
+
 		public function startCuePointLoop(start:Boolean):void{
 			clearTimeout(cuepointLoogUint);
 			if(start){
 				cuepointLoogUint = setInterval(onCuePotint,loopTime);
 			}
 		}
-		
+
 		public function onCuePotint():void{
 			var cues:Array = Model.docActionInfo.cuepoint;
 			//当前时间
@@ -77,15 +77,15 @@ package com.vhall.app.model
 					{
 						return;
 					}
-					
+
 					currCuepoint = cues[i];
 					//ExternalInterface.call("console.log", "onCuepointLoop循环满足条件开始上报");
-				    WebAJMessage.sendRecordMsg(currCuepoint.content);
+					WebAJMessage.sendRecordMsg(currCuepoint.content);
 					break;
 				}
 			}
 		}
-		
+
 		public function toSeekCuePointInfo(time):void{
 			var cues:Array = Model.docActionInfo.cuepoint;
 			if(cues == null ||  cues.length < 0){
@@ -111,9 +111,9 @@ package com.vhall.app.model
 					}else{
 						break;
 					}
-					//				}
+						//				}
 				}
-				
+
 				//发送翻页并且清除
 				if(lastPoint){
 					var creat:String = createCeanPage(lastPoint.content)
@@ -129,9 +129,10 @@ package com.vhall.app.model
 				Logger.getLogger("docCuep").info("解析跳转文档数据出错："+ e.errorID + "_"+ e.message);
 			}
 		}
-		
+
 		public function destroy():void{
 			clearTimeout(cuepointLoogUint);
 		}
 	}
 }
+

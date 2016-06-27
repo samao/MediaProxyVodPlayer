@@ -4,13 +4,13 @@ package com.vhall.app.model.info
 	import com.vhall.app.model.info.vo.DefinitionVo;
 	import com.vhall.app.model.info.vo.ServeLinevo;
 	import com.vhall.framework.log.Logger;
-	
+
 	import flash.utils.Dictionary;
 
 	/**
-	 * 当前流数据的一些信息 
+	 * 当前流数据的一些信息
 	 * @author Sol
-	 * 
+	 *
 	 */	
 	public class VideoInfo extends BaseInfo
 	{
@@ -19,51 +19,51 @@ package com.vhall.app.model.info
 			super();
 		}
 		/**
-		 *清晰度数据(源数据) 
+		 *清晰度数据(源数据)
 		 */		
 		private var _playItem:String;
-		
+
 		/**
-		 *线路数据(源数据)  
+		 *线路数据(源数据)
 		 */		
 		private var _cdnServers:String;
 		/**
-		 *连接失败的线路 
+		 *连接失败的线路
 		 */		
 		public var failLines:Dictionary;
-		
+
 		/**
-		 *选中线路 
+		 *选中线路
 		 */		
 		public var selectLineVo:ServeLinevo;
 		/**
-		 *选中清晰度 
+		 *选中清晰度
 		 */		
 		public var selectDefVo:DefinitionVo;
-		
+
 		private var _media_srv:String;
 		/**
-		 *token 
+		 *token
 		 */		
 		public var streamtoken:String;
-		
+
 		/**
 		 *音频流地址(语音流名rtmp下有)
 		 */		
 		public var audioSrv:String;
-		
+
 		private var _stream_name:String;
 		/**
-		 *线路数据 
+		 *线路数据
 		 */		
 		public var serverLineInfo:Array = [];
 		/**
-		 *清晰度数据 
+		 *清晰度数据
 		 */		
 		public var definitionInfo:Array = [];
-		
+
 		private var _publishServers:String;
-		
+
 		public var allPublishServers:Array = [];
 
 		/**
@@ -98,13 +98,13 @@ package com.vhall.app.model.info
 
 
 		/**
-		 *清晰度数据 
+		 *清晰度数据
 		 */
 		public function get playItem():String
 		{
 			return _playItem;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -113,17 +113,17 @@ package com.vhall.app.model.info
 			_playItem = value;
 			try
 			{
-				
+
 				var arr:Array = com.adobe.serialization.json.JSON.decode(_playItem);
 				if(arr && arr.length > 0){
 					var item:* = arr[0]
 					var def:DefinitionVo = new DefinitionVo("default",item["default"]);
-						var middle:DefinitionVo = new DefinitionVo("middle",item.middle);
-						var low:DefinitionVo = new DefinitionVo("low",item.low);
-						definitionInfo[0] = def;
-						definitionInfo[1] = middle;
-						definitionInfo[2] = low;
-						selectDefVo = definitionInfo[0];
+					var middle:DefinitionVo = new DefinitionVo("middle",item.middle);
+					var low:DefinitionVo = new DefinitionVo("low",item.low);
+					definitionInfo[0] = def;
+					definitionInfo[1] = middle;
+					definitionInfo[2] = low;
+					selectDefVo = definitionInfo[0];
 				}
 			}
 			catch(e:Error){}
@@ -132,13 +132,13 @@ package com.vhall.app.model.info
 //			definitionInfo.push(new DefinitionVo("low", {"server":"rtmp://ccrtmplive02.t.vhall.com/vhall","file":"465936505_l"}));
 //			selectDefVo = definitionInfo[0];
 		}
-		
+
 		/**服务器选择器的数据源**/
 		public function get cdnServers():String
 		{
 			return _cdnServers;
 		}
-		
+
 		/**
 		 * @private
 		 */
@@ -190,7 +190,7 @@ package com.vhall.app.model.info
 					obj.url = arr[i].srv;
 					allPublishServers.push(obj);
 				}
-				
+
 				Logger.getLogger().info(allPublishServers,allPublishServers.length);
 				var str:String = com.adobe.serialization.json.JSON.encode(allPublishServers);
 				Logger.getLogger().info(str);
@@ -199,8 +199,9 @@ package com.vhall.app.model.info
 			{
 				Logger.getLogger().info("convert publish server error",error.message);
 			}
-			
+
 		}
 
 	}
 }
+

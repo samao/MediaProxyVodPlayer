@@ -14,7 +14,7 @@ package com.vhall.app.view.control
 		public function ControlLayer(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0)
 		{
 			super(parent, xpos, ypos);
-			height = 35;
+			height = 45;
 			bottom = 0;
 		}
 
