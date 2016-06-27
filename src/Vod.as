@@ -16,12 +16,12 @@ package
 	import com.vhall.framework.load.ResourceLoader;
 	import com.vhall.framework.log.Logger;
 	import com.vhall.framework.ui.container.Box;
-	
+
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.system.ApplicationDomain;
 	import flash.system.Security;
-	
+
 	public class Vod extends Box implements IResponder
 	{
 		// 整个视频层
@@ -32,7 +32,7 @@ package
 		public var barrageLayer:Layer;
 		// 弹框层
 		public var popupLayer:PopupLayer;
-		
+
 		public var debug:DebugLayer;
 		public function Vod(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0)
 		{
@@ -43,13 +43,13 @@ package
 			super(parent, xpos, ypos);
 			new ResponderMediator(this);
 		}
-		
+
 		override protected function componentInited(e:Event):void
 		{
 			super.componentInited(e);
 			loadDocMsg();
 		}
-		
+
 		override protected function createChildren():void
 		{
 			// TODO Auto Generated method stub
@@ -58,7 +58,7 @@ package
 			controlLayer = new ControlLayer(this);
 			LayerManager.initLayer(this);
 		}
-		
+
 		override protected function sizeChanged():void
 		{
 			super.sizeChanged();
@@ -67,10 +67,10 @@ package
 			controlLayer.width = StageManager.stageWidth;
 			popupLayer && popupLayer.setSize(_width, _height);
 		}
-		
+
 		/**
-		 *加载打点数据 
-		 * 
+		 *加载打点数据
+		 *
 		 */		
 		protected function loadDocMsg():void{
 			if(Model.docActionInfo && Model.docActionInfo.msg_url){
@@ -80,7 +80,7 @@ package
 				Logger.getLogger("loadDocMsg").info("docActionInfo or msg_url is null");
 			}
 		}
-		
+
 		protected function onDocMsg(item:Object, content:Object, domain:ApplicationDomain):void
 		{
 			// TODO Auto Generated method stub
@@ -93,9 +93,10 @@ package
 		{
 			return null;
 		}
-		
+
 		public function handleCare(msg:String, ...parameters):void
 		{
 		}
 	}
 }
+
