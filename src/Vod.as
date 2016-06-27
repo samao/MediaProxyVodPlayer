@@ -12,13 +12,16 @@ package
 	import com.vhall.framework.app.manager.StageManager;
 	import com.vhall.framework.app.mvc.IResponder;
 	import com.vhall.framework.app.mvc.ResponderMediator;
+	import com.vhall.framework.keyboard.KeyboardMapper;
 	import com.vhall.framework.load.ResourceLoader;
 	import com.vhall.framework.log.Logger;
 	import com.vhall.framework.ui.container.Box;
+	import com.vhall.framework.ui.manager.PopupManager;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.system.ApplicationDomain;
 	import flash.system.Security;
+	import flash.ui.Keyboard;
 
 	public class Vod extends Box implements IResponder
 	{
@@ -32,8 +35,6 @@ package
 			new ResponderMediator(this);
 		}
 
-		// 弹幕层
-		public var barrageLayer:Layer;
 		// 控制层，音量，线路，全屏那些
 		public var controlLayer:ControlLayer;
 
@@ -65,6 +66,11 @@ package
 			popupLayer = new PopupLayer(this);
 			controlLayer = new ControlLayer(this);
 			LayerManager.initLayer(this);
+
+			debug = new DebugLayer();
+			//注册调试信息 快捷键为ctrl+K
+			var km:KeyboardMapper = new KeyboardMapper(StageManager.stage);
+			km.mapListener(showLogs, Keyboard.SHIFT, Keyboard.K);
 		}
 
 		/**
@@ -100,6 +106,11 @@ package
 			_width = StageManager.stageWidth;
 			controlLayer.width = StageManager.stageWidth;
 			popupLayer && popupLayer.setSize(_width, _height);
+		}
+
+		private function showLogs():void
+		{
+			PopupManager.addPopup(debug);
 		}
 	}
 }
