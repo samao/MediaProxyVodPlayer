@@ -5,23 +5,18 @@ package com.vhall.app.view.control
 	import com.vhall.app.model.Model;
 	import com.vhall.app.model.info.vo.ServeLinevo;
 	import com.vhall.app.net.AppCMD;
-	import com.vhall.app.view.control.ui.TimeBar;
-	import com.vhall.app.view.control.ui.TimeDragBar;
 	import com.vhall.app.view.control.ui.VolumeBar;
 	import com.vhall.app.view.control.ui.component.SwitchListBox;
 	import com.vhall.app.view.control.ui.component.VideoAudioChangeBtn;
-	import com.vhall.framework.app.manager.RenderManager;
 	import com.vhall.framework.app.manager.StageManager;
 	import com.vhall.framework.app.mvc.IResponder;
 	import com.vhall.framework.app.mvc.ResponderMediator;
 	import com.vhall.framework.log.Logger;
 	import com.vhall.framework.ui.container.HBox;
-	import com.vhall.framework.ui.controls.Label;
 	import com.vhall.framework.ui.controls.ToggleButton;
 	import com.vhall.framework.ui.controls.UIComponent;
 	import com.vhall.framework.ui.event.DragEvent;
 
-	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.FullScreenEvent;
@@ -207,8 +202,6 @@ package com.vhall.app.view.control
 			hb.verticalAlign = "center";
 			hb.horizontalAlign = "right";
 			hb.move(0, 20);
-			var timebar:TimeBar = new TimeBar(this);
-			timebar.startLoop()
 
 			// 静音
 			onInitVolume();
