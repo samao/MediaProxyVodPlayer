@@ -2,6 +2,7 @@ package
 {
 	import com.vhall.app.common.Resource;
 	import com.vhall.app.load.ResourceLoadingView;
+	import com.vhall.app.model.Model;
 	import com.vhall.framework.app.App;
 	import com.vhall.framework.app.manager.StageManager;
 	import com.vhall.framework.load.ResourceLibrary;
@@ -26,6 +27,7 @@ package
 			// 初始化参数
 			var vars:Object = this.loaderInfo.parameters;
 			// model init
+			Model.Me().init(vars);
 		}
 		
 		protected function onInited(event:Event):void

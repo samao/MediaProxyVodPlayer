@@ -6,20 +6,20 @@ package com.vhall.app.common.controller
 	import com.vhall.framework.log.Logger;
 
 	/**
-	 * 消息注册控制 
+	 * 消息注册控制
 	 * @author Sol
-	 * 
-	 */	
+	 *
+	 */
 	public class MessageController extends Controller
 	{
 		/**
-		 * 消息注册 
-		 * 
-		 */		
+		 * 消息注册
+		 *
+		 */
 		public function MessageController()
 		{
 		}
-		
+
 		override protected function initController():void
 		{
 			// 注册接收的回调
