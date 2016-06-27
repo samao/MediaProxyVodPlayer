@@ -19,16 +19,6 @@ package com.vhall.app.net
 		/** 切换视频线路*/
 		public static const MEDIA_SWITCH_LINE:String = MEDIA + "switchLine";
 		
-		/** 弹幕相关*/
-		private static const BARRAGE:String = "barrage_"
-		/**
-		 *发送弹幕 
-		 */		
-		public static const BARRAGE_ADD:String = BARRAGE + "add";
-		/**	开启弹幕功能*/
-		public static const BARRAGE_OPEN:String = BARRAGE + "open";
-		public static const BARRAGE_CLOSE:String = BARRAGE + "close"
-		
 		/**
 		 *ui相关 
 		 */		
