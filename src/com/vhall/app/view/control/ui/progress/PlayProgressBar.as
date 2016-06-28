@@ -195,7 +195,7 @@ package com.vhall.app.view.control.ui.progress
 		protected function showThumbTip(usrVo:UsrDataVo):void
 		{
 			thumbTips.show(this);
-			thumbTips.data = new UsrDataVo("hello", "", 1234);
+			thumbTips.data = usrVo; //new UsrDataVo("hello", "", 1234);
 		}
 
 		/**

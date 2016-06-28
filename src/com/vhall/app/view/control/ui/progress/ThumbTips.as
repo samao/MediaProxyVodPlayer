@@ -1,6 +1,7 @@
 package com.vhall.app.view.control.ui.progress
 {
 	import com.vhall.app.common.components.TimeLabel;
+	import com.vhall.app.model.Model;
 	import com.vhall.app.model.info.vo.UsrDataVo;
 	import com.vhall.framework.ui.controls.Image;
 	import com.vhall.framework.ui.controls.Label;
@@ -24,11 +25,6 @@ package com.vhall.app.view.control.ui.progress
 		{
 			super.createChildren();
 
-//			graphics.clear();
-//			graphics.beginFill(0xC0C0C0, 0.7);
-//			graphics.drawRect(0, -tri.height, 140, -126);
-//			graphics.endFill();
-
 			lblTime = new TimeLabel(container);
 			lblTime.color = 0xFF0000;
 			lblDescribe = new Label(container, 0, 24);
@@ -44,7 +40,7 @@ package com.vhall.app.view.control.ui.progress
 			var info:UsrDataVo = value as UsrDataVo;
 			lblTime.ms = info.time;
 			lblDescribe.text = info.msg;
-			imgThumb.source = "http://cnhlsvodhls01.e.vhall.com//vhallrecord/481859354/20160427154529/1553.jpg";
+			imgThumb.source = "http://cnhlsvodhls01.e.vhall.com" + info.picUrl; //"http://cnhlsvodhls01.e.vhall.com//vhallrecord/481859354/20160427154529/1553.jpg";
 		}
 	}
 }

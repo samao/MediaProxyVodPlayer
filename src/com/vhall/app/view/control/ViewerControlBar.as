@@ -58,7 +58,7 @@ package com.vhall.app.view.control
 
 		public function careList():Array
 		{
-			var arr:Array = [AppCMD.MEDIA_CHANGEVIDEO_MODE, AppCMD.DATA_CUEPOINT_COMP, AppCMD.CUE_POINT_CLICK,AppCMD.MEDIA_STATES_DURATION_UPDATE,AppCMD.MEDIA_STATES_TIME_UPDATE];
+			var arr:Array = [AppCMD.MEDIA_CHANGEVIDEO_MODE, AppCMD.DATA_CUEPOINT_COMP, AppCMD.CUE_POINT_CLICK, AppCMD.MEDIA_STATES_DURATION_UPDATE, AppCMD.MEDIA_STATES_TIME_UPDATE];
 			return arr;
 		}
 
@@ -105,12 +105,12 @@ package com.vhall.app.view.control
 					playProgressBar.currentTime = args[0];
 					break;
 				case AppCMD.MEDIA_STATES_DURATION_UPDATE:
-					this.time.totalTime = args[0]*1000;
-					this.playProgressBar.proBar.max = args[0]*1000;
+					this.time.totalTime = args[0] * 1000;
+					this.playProgressBar.proBar.max = args[0] * 1000;
 					break;
 				case AppCMD.MEDIA_STATES_TIME_UPDATE:
-					this.time.currentTime = MediaModel.me().player.time*1000;
-					this.playProgressBar.proBar.value = MediaModel.me().player.time*1000;
+					this.time.currentTime = MediaModel.me().player.time * 1000;
+					this.playProgressBar.proBar.value = MediaModel.me().player.time * 1000;
 					break;
 			}
 		}
@@ -224,7 +224,7 @@ package com.vhall.app.view.control
 		{
 			super.createChildren();
 			playProgressBar = new PlayProgressBar(this);
-			playProgressBar.proBar.addEventListener(DragEvent.CHANGE,onBarSeek);
+			playProgressBar.proBar.addEventListener(DragEvent.CHANGE, onBarSeek);
 
 			var leftHB:HBox = new HBox(this, 0, 10);
 			leftHB.verticalAlign = "center";
@@ -232,6 +232,7 @@ package com.vhall.app.view.control
 			btnPlay = new ToggleButton(leftHB);
 			btnPlay.skin = "assets/ui/play.png";
 			btnPlay.downSkin = "assets/ui/pause.png";
+			btnPlay.setSelected(true);
 			btnPlay.addEventListener(MouseEvent.CLICK, onPlayBtnClickHandler);
 
 			time = new TrackTime(leftHB);
@@ -265,9 +266,9 @@ package com.vhall.app.view.control
 		}
 
 		protected function onBarSeek(event:DragEvent):void
-		{	
-			NResponder.dispatch(AppCMD.VIDEO_CONTROL_SEEK,[event.percent]);
-		}		
+		{
+			NResponder.dispatch(AppCMD.VIDEO_CONTROL_SEEK, [event.percent]);
+		}
 
 
 		protected function muteHandler(event:Event = null):void
@@ -284,7 +285,7 @@ package com.vhall.app.view.control
 			if(event)
 			{
 				MediaModel.me().volume = _volumeBar.volumeValue / 100;
-				NResponder.dispatch(AppCMD.MEDIA_SET_VOLUME,[MediaModel.me().volume]);
+				NResponder.dispatch(AppCMD.MEDIA_SET_VOLUME, [MediaModel.me().volume]);
 			}
 
 			updateVolumeButton();
