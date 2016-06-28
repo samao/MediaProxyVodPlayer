@@ -79,10 +79,10 @@ package  com.vhall.app.view.control.ui.progress
 		override protected function initSkin():void
 		{
 			super.initSkin();
-			bg.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0x00FFFF);
-			finished.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0xff0000);
-			quad.visible = false;
-			buffer.visible = false;
+			_bg.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0x00FFFF);
+			_finished.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0xff0000);
+			_quad.visible = false;
+			_buffer.visible = false;
 		}
 
 	}
