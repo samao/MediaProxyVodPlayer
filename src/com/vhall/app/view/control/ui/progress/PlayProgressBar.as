@@ -78,9 +78,9 @@ package com.vhall.app.view.control.ui.progress
 			if(cuePoints && cuePoints.length>0){
 				for (var j:int = 0; j < cuePoints.length; j++) 
 				{
-					tmpCue = cuePoints[i];
+					tmpCue = cuePoints[j];
 					if(tmpCue && tmpCue.parent){
-						tmpCue.parent.removeChild(tmpCue);
+						tmpCue.removeFromParent();
 					}
 				}
 
