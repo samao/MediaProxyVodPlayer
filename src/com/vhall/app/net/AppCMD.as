@@ -74,5 +74,8 @@ package com.vhall.app.net
 		 */		
 		public static const DATA_CUEPOINT_COMP:String = "data_cuepoint_loaded";
 		
+		/**	锚点数据点击了*/
+		public static const CUE_POINT_CLICK:String = "cur_point_click";
+		
 	}
 }

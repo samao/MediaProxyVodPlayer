@@ -41,5 +41,26 @@ package com.vhall.app.view.control.ui.progress
 			container.width = lblTime.width;
 			RenderManager.getInstance().invalidate(invalidate);
 		}
+
+		override protected function updateDisplay():void
+		{
+			super.updateDisplay();
+//			this.y = -tri.height - container.height;
+//			tri.y = container.height;
+//			var s:Stage = StageManager.stage;
+//			tri.x = s.mouseX - tri.width / 2;
+//			if(s.mouseX - container.width / 2 < 0)
+//			{
+//				container.x = 0;
+//			}
+//			else if(s.mouseX + container.width / 2 > s.stageWidth)
+//			{
+//				container.x = s.stageWidth - container.width;
+//			}
+//			else
+//			{
+//				container.x = s.mouseX - container.width / 2;
+//			}
+		}
 	}
 }

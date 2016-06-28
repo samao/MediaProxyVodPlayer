@@ -24,10 +24,10 @@ package com.vhall.app.view.control.ui.progress
 		{
 			super.createChildren();
 
-			graphics.clear();
-			graphics.beginFill(0xC0C0C0, 0.7);
-			graphics.drawRect(0, -tri.height, 140, -126);
-			graphics.endFill();
+//			graphics.clear();
+//			graphics.beginFill(0xC0C0C0, 0.7);
+//			graphics.drawRect(0, -tri.height, 140, -126);
+//			graphics.endFill();
 
 			lblTime = new TimeLabel(container);
 			lblTime.color = 0xFF0000;
@@ -36,7 +36,7 @@ package com.vhall.app.view.control.ui.progress
 			imgThumb = new Image(container, 0, 48);
 			imgThumb.setSize(140, 78);
 
-			bg.visible = false;
+			bg.setSize(140, 126);
 		}
 
 		override public function set data(value:*):void
@@ -45,12 +45,6 @@ package com.vhall.app.view.control.ui.progress
 			lblTime.ms = info.time;
 			lblDescribe.text = info.msg;
 			imgThumb.source = "http://cnhlsvodhls01.e.vhall.com//vhallrecord/481859354/20160427154529/1553.jpg";
-		}
-
-		override protected function updateDisplay():void
-		{
-			super.updateDisplay();
-			container.y = -126 - tri.height;
 		}
 	}
 }

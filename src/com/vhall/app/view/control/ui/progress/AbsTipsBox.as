@@ -4,6 +4,7 @@ package com.vhall.app.view.control.ui.progress
 	import com.vhall.framework.ui.container.Box;
 	import com.vhall.framework.ui.controls.Image;
 
+	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Stage;
 	import flash.geom.Rectangle;
@@ -31,13 +32,18 @@ package com.vhall.app.view.control.ui.progress
 
 		protected var _data:*;
 
-		public function show():void
+		public function show(p:DisplayObjectContainer):void
 		{
+			if(p)
+			{
+				p.addChild(this);
+			}
 			this.visible = true;
 		}
 
 		public function hide():void
 		{
+			this.removeFromParent();
 			this.visible = false;
 		}
 
@@ -62,19 +68,21 @@ package com.vhall.app.view.control.ui.progress
 		override protected function updateDisplay():void
 		{
 			super.updateDisplay();
-			tri.y = -tri.height;
-			container.y = tri.y - container.height + 2;
-
+			this.y = -tri.height - container.height;
+			tri.y = container.height;
 			var s:Stage = StageManager.stage;
 			tri.x = s.mouseX - tri.width / 2;
-			container.x = s.mouseX - container.width / 2;
-			if(container.x <= 0)
+			if(s.mouseX - container.width / 2 < 0)
 			{
 				container.x = 0;
 			}
-			else if(container.x > s.stageWidth - container.width)
+			else if(s.mouseX + container.width / 2 > s.stageWidth)
 			{
 				container.x = s.stageWidth - container.width;
+			}
+			else
+			{
+				container.x = s.mouseX - container.width / 2;
 			}
 		}
 	}

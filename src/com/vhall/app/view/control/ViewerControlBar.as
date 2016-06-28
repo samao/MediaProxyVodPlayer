@@ -1,10 +1,13 @@
 package com.vhall.app.view.control
 {
+	import appkit.responders.NResponder;
+
 	import com.vhall.app.model.DataService;
 	import com.vhall.app.model.MediaModel;
 	import com.vhall.app.model.Model;
 	import com.vhall.app.model.info.vo.ServeLinevo;
 	import com.vhall.app.net.AppCMD;
+	import com.vhall.app.view.control.ui.TrackTime;
 	import com.vhall.app.view.control.ui.VolumeBar;
 	import com.vhall.app.view.control.ui.component.SwitchListBox;
 	import com.vhall.app.view.control.ui.component.VideoAudioChangeBtn;
@@ -17,11 +20,11 @@ package com.vhall.app.view.control
 	import com.vhall.framework.ui.controls.ToggleButton;
 	import com.vhall.framework.ui.controls.UIComponent;
 	import com.vhall.framework.ui.event.DragEvent;
+
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.FullScreenEvent;
 	import flash.events.MouseEvent;
-	import appkit.responders.NResponder;
 
 	public class ViewerControlBar extends AbstractControlBar implements IResponder
 	{
@@ -55,10 +58,7 @@ package com.vhall.app.view.control
 
 		public function careList():Array
 		{
-			var arr:Array = [
-				AppCMD.MEDIA_CHANGEVIDEO_MODE,
-				AppCMD.DATA_CUEPOINT_COMP
-				];
+			var arr:Array = [AppCMD.MEDIA_CHANGEVIDEO_MODE, AppCMD.DATA_CUEPOINT_COMP, AppCMD.CUE_POINT_CLICK];
 			return arr;
 		}
 
@@ -95,9 +95,14 @@ package com.vhall.app.view.control
 					updateStatus(true);
 					break;
 				case AppCMD.DATA_CUEPOINT_COMP:
-					if(playProgressBar){
+					if(playProgressBar)
+					{
 						playProgressBar.showCuePoint();
 					}
+					break;
+				case AppCMD.CUE_POINT_CLICK:
+					trace(args[0]);
+					playProgressBar.currentTime = args[0];
 					break;
 			}
 		}
@@ -202,17 +207,34 @@ package com.vhall.app.view.control
 			}
 		}
 
+		/**	播放按钮*/
+		private var btnPlay:ToggleButton;
+
+		private var time:TrackTime;
+
 		override protected function createChildren():void
 		{
 			super.createChildren();
+			playProgressBar = new PlayProgressBar(this);
+
+			var leftHB:HBox = new HBox(this, 0, 10);
+			leftHB.verticalAlign = "center";
+
+			btnPlay = new ToggleButton(leftHB);
+			btnPlay.skin = "assets/ui/play.png";
+			btnPlay.downSkin = "assets/ui/pause.png";
+			btnPlay.addEventListener(MouseEvent.CLICK, onPlayBtnClickHandler);
+
+			time = new TrackTime(leftHB);
+			time.currentTime = 10000;
+			time.totalTime = 100000;
+
 			hb = new HBox(this);
 			hb.setSize(width / 2, height);
 			hb.right = 10;
 			hb.verticalAlign = "center";
 			hb.horizontalAlign = "right";
-			hb.move(0, 20);
-			playProgressBar = new PlayProgressBar(this);
-//			playProgressBar.startLoop();
+			hb.move(0, 10);
 
 			// 静音
 			onInitVolume();
@@ -324,8 +346,7 @@ package com.vhall.app.view.control
 		 */
 		protected function onInitVolume():void
 		{
-			var volumeBox:HBox = new HBox(this);
-			volumeBox.left = 10;
+			var volumeBox:HBox = new HBox(hb);
 			volumeBox.verticalCenter = 0;
 			volumeBox.verticalAlign = "center";
 			_muteBut = new ToggleButton(volumeBox);
@@ -407,6 +428,11 @@ package com.vhall.app.view.control
 			_muteBut.setSelected(e.percent == 0);
 			_volumeBeforeMute = _volumeBar.volumeValue;
 			muteHandler();
+		}
+
+		protected function onPlayBtnClickHandler(event:MouseEvent):void
+		{
+
 		}
 	}
 }

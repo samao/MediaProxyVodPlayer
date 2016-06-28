@@ -15,6 +15,7 @@ package com.vhall.app.view.control.ui.progress
 	public class PlayProgressBar extends Box
 	{
 		protected var cuePoints:Vector.<CuePointItem>;
+
 		public function PlayProgressBar(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number = 0)
 		{
 			super(parent, xpos, ypos);
@@ -69,9 +70,9 @@ package com.vhall.app.view.control.ui.progress
 			bar.quadImage.visible = false;
 			bar.bufferBGImage.visible = false;
 
-			labelTips = new TimeTips(this);
+			labelTips = new TimeTips();
 			labelTips.hide();
-			thumbTips = new ThumbTips(this);
+			thumbTips = new ThumbTips();
 			thumbTips.hide();
 			onInitCuePoints();
 		}
@@ -84,64 +85,66 @@ package com.vhall.app.view.control.ui.progress
 		}
 
 
-		protected function onInitCuePoints():void{
+		protected function onInitCuePoints():void
+		{
 			var tmpCue:CuePointItem;
-			if(cuePoints && cuePoints.length>0){
-				for (var j:int = 0; j < cuePoints.length; j++) 
+			if(cuePoints && cuePoints.length > 0)
+			{
+				for(var j:int = 0; j < cuePoints.length; j++)
 				{
 					tmpCue = cuePoints[j];
-					if(tmpCue && tmpCue.parent){
-						tmpCue.removeFromParent();
+					if(tmpCue && tmpCue.parent)
+					{
+						{
+							tmpCue.removeFromParent();
+						}
 					}
-				}
 
+				}
 			}
-			if(Model.docActionInfo.usrdata &&Model.docActionInfo.usrdata.length > 0){
+
+			if(Model.docActionInfo.usrdata && Model.docActionInfo.usrdata.length > 0)
+			{
 				cuePoints = new Vector.<CuePointItem>();
 				var cuDatas:Array = Model.docActionInfo.usrdata;
 
-				for (var i:int = 0; i < cuDatas.length; i++) 
+				for(var i:int = 0; i < cuDatas.length; i++)
 				{
-					tmpCue = new CuePointItem(this,cuDatas[i]);
-					tmpCue.addEventListener(MouseEvent.ROLL_OVER,onCueOver);
+					tmpCue = new CuePointItem(this, cuDatas[i]);
+					tmpCue.addEventListener(MouseEvent.ROLL_OVER, onCueOver);
 					cuePoints[cuePoints.length] = tmpCue;
 				}
 			}
+
 		}
 
 		protected function onCueOver(event:MouseEvent):void
 		{
-			// TODO Auto-generated method stub
-			this.addEventListener(MouseEvent.ROLL_OUT,onCueOut);
+			event.target.addEventListener(MouseEvent.ROLL_OUT, onCueOut);
 			var cuePoint:CuePointItem = event.target as CuePointItem;
 			showThumbTip(cuePoint.info);
 		}
 
 		protected function onCueOut(event:MouseEvent):void
 		{
-			// TODO Auto-generated method stub
-			this.removeEventListener(MouseEvent.ROLL_OUT,onCueOut);
+			event.target.removeEventListener(MouseEvent.ROLL_OUT, onCueOut);
 			hideThumbTip();
 		}
 
-		protected function layoutCuePoints():void{
-			if(cuePoints && cuePoints.length > 0){
+		protected function layoutCuePoints():void
+		{
+			if(cuePoints && cuePoints.length > 0)
+			{
 				var len:int = cuePoints.length;
 				var tmpCue:CuePointItem;
 				var tRate:int
-				for (var i:int = 0; i < len; i++) 
+				for(var i:int = 0; i < len; i++)
 				{
 					tmpCue = cuePoints[i];
 					tRate = tmpCue.getTimeRate(2000);
 					tmpCue.x = width * tRate * 0.01;
 				}
 			}
-=======
-			labelTips = new TimeTips(this);
-			labelTips.hide();
-			thumbTips = new ThumbTips(this);
-			thumbTips.hide();
->>>>>>> fb269790a246104f12ec0d3b75b54ba87ca0ddcd
 		}
 
 		/**
@@ -176,10 +179,8 @@ package com.vhall.app.view.control.ui.progress
 		/**	划过*/
 		private function onBarHover(e:DragEvent):void
 		{
-			labelTips.show();
+			labelTips.show(this);
 			labelTips.data = e.percent * 1000 * 1000;
-//			thumbTips.show();
-//			thumbTips.data = new UsrDataVo("hello", "", 1234);
 		}
 
 		private function onBarOut(e:MouseEvent):void
@@ -192,22 +193,30 @@ package com.vhall.app.view.control.ui.progress
 		 *显示缩略图
 		 *
 		 */
-		protected function showThumbTip(usrVo:UsrDataVo):void{
-
+		protected function showThumbTip(usrVo:UsrDataVo):void
+		{
+			thumbTips.show(this);
+			thumbTips.data = new UsrDataVo("hello", "", 1234);
 		}
+
 		/**
 		 *隐藏缩略图
 		 *
 		 */
-		protected function hideThumbTip():void{
-
+		protected function hideThumbTip():void
+		{
+			thumbTips.hide();
 		}
 
-		public function showCuePoint():void{
+		public function showCuePoint():void
+		{
 			onInitCuePoints();
 			layoutCuePoints();
 		}
+
+		public function set currentTime(value:Number):void
+		{
+			bar.value = value;
+		}
 	}
 }
-
-
