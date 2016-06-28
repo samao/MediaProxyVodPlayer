@@ -1,6 +1,7 @@
 package  com.vhall.app.view.control.ui.progress
 {
 	import com.vhall.app.model.Model;
+	import com.vhall.app.model.info.vo.UsrDataVo;
 	import com.vhall.framework.ui.controls.HDragBar;
 	import com.vhall.framework.ui.utils.ComponentUtils;
 	
@@ -35,7 +36,7 @@ package  com.vhall.app.view.control.ui.progress
 			var arr:Array = new Array();
 			for (var i:int = 1; i < 11; i++) 
 			{
-				arr[arr.length] = {time:i*10};
+				arr[arr.length] = new UsrDataVo("这里是测试1", "hallrecord/481859354/20160427154529/207.jpg",i*10);
 			}
 			Model.Me().docactioninfo.usrdata  = arr;
 		}

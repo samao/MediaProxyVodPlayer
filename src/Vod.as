@@ -6,6 +6,7 @@ package
 	import com.vhall.app.manager.LayerManager;
 	import com.vhall.app.model.DocCuepointServer;
 	import com.vhall.app.model.Model;
+	import com.vhall.app.model.info.vo.UsrDataVo;
 	import com.vhall.app.view.control.ControlLayer;
 	import com.vhall.app.view.debug.DebugLayer;
 	import com.vhall.app.view.popup.PopupLayer;
@@ -17,6 +18,7 @@ package
 	import com.vhall.framework.log.Logger;
 	import com.vhall.framework.ui.container.Box;
 	import com.vhall.framework.ui.manager.PopupManager;
+
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.system.ApplicationDomain;
@@ -95,7 +97,8 @@ package
 			// TODO Auto Generated method stub
 			var obj:Object = JSON.stringify(content);
 			Model.docActionInfo.cuepoint = obj.cuepoint as Array;
-			Model.docActionInfo.usrdata = obj.usrdata as Array;
+			Model.docActionInfo.setupUsrData(obj.usrdata as Array)
+
 			DocCuepointServer.getInstance();
 		}
 
@@ -114,3 +117,5 @@ package
 		}
 	}
 }
+
+

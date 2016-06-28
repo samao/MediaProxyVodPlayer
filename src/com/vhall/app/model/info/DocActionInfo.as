@@ -1,5 +1,7 @@
 package com.vhall.app.model.info
 {
+	import com.vhall.app.model.info.vo.UsrDataVo;
+
 	/**
 	 *
 	 *@author zhaoqinghao
@@ -41,6 +43,18 @@ package com.vhall.app.model.info
 			_msg_url = value;
 		}
 
+
+		public function setupUsrData(data:Array):void{
+			usrdata = [];
+			var tmpvo:UsrDataVo;
+			try{
+				for (var i:int = 0; i < data.length; i++) 
+				{
+					tmpvo=  new UsrDataVo(data[i].msg,data[i].picurl,data[i].timePoint);
+					usrdata[i] = tmpvo;
+				}
+			}catch(e:Error){};
+		}
 
 	}
 }

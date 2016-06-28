@@ -1,11 +1,13 @@
 package com.vhall.app.view.control.ui.progress
 {
+	import com.vhall.app.model.info.vo.UsrDataVo;
 	import com.vhall.framework.ui.controls.UIComponent;
 
 	import flash.display.DisplayObjectContainer;
+
 	public class CuePointItem extends UIComponent
 	{
-		public function CuePointItem(parent:DisplayObjectContainer=null, info:Object = null, xpos:Number=0, ypos:Number=0)
+		public function CuePointItem(parent:DisplayObjectContainer=null, info:UsrDataVo = null, xpos:Number=0, ypos:Number=0)
 		{
 			pointInfo=info;
 			super(parent, xpos, ypos);
@@ -18,7 +20,7 @@ package com.vhall.app.view.control.ui.progress
 		 */
 		public function getTimeRate(ttTime:Number):int
 		{
-			return (pointInfo.time/ttTime)*100;
+			return (pointInfo.time/ttTime*1000)*100;
 		}
 
 		override protected function createChildren():void
