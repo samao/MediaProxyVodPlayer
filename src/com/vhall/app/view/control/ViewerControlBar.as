@@ -1,7 +1,5 @@
 package com.vhall.app.view.control
 {
-	import appkit.responders.NResponder;
-
 	import com.vhall.app.model.DataService;
 	import com.vhall.app.model.MediaModel;
 	import com.vhall.app.model.Model;
@@ -25,6 +23,8 @@ package com.vhall.app.view.control
 	import flash.events.Event;
 	import flash.events.FullScreenEvent;
 	import flash.events.MouseEvent;
+
+	import appkit.responders.NResponder;
 
 	public class ViewerControlBar extends AbstractControlBar implements IResponder
 	{
@@ -58,7 +58,7 @@ package com.vhall.app.view.control
 
 		public function careList():Array
 		{
-			var arr:Array = [AppCMD.MEDIA_CHANGEVIDEO_MODE, AppCMD.DATA_CUEPOINT_COMP, AppCMD.CUE_POINT_CLICK];
+			var arr:Array = [AppCMD.MEDIA_CHANGEVIDEO_MODE, AppCMD.DATA_CUEPOINT_COMP, AppCMD.CUE_POINT_CLICK,AppCMD.MEDIA_STATES_DURATION_UPDATE,AppCMD.MEDIA_STATES_TIME_UPDATE];
 			return arr;
 		}
 
@@ -103,6 +103,14 @@ package com.vhall.app.view.control
 				case AppCMD.CUE_POINT_CLICK:
 					trace(args[0]);
 					playProgressBar.currentTime = args[0];
+					break;
+				case AppCMD.MEDIA_STATES_DURATION_UPDATE:
+					this.time.totalTime = args[0]*1000;
+					this.playProgressBar.proBar.max = args[0]*1000;
+					break;
+				case AppCMD.MEDIA_STATES_TIME_UPDATE:
+					this.time.currentTime = MediaModel.me().player.time*1000;
+					this.playProgressBar.proBar.value = MediaModel.me().player.time*1000;
 					break;
 			}
 		}
@@ -216,6 +224,7 @@ package com.vhall.app.view.control
 		{
 			super.createChildren();
 			playProgressBar = new PlayProgressBar(this);
+			playProgressBar.proBar.addEventListener(DragEvent.CHANGE,onBarSeek);
 
 			var leftHB:HBox = new HBox(this, 0, 10);
 			leftHB.verticalAlign = "center";
@@ -255,6 +264,12 @@ package com.vhall.app.view.control
 			btnFullscreen.userData = 9990;
 		}
 
+		protected function onBarSeek(event:DragEvent):void
+		{	
+			NResponder.dispatch(AppCMD.VIDEO_CONTROL_SEEK,[event.percent]);
+		}		
+
+
 		protected function muteHandler(event:Event = null):void
 		{
 			if(_muteBut.selected)
@@ -269,7 +284,7 @@ package com.vhall.app.view.control
 			if(event)
 			{
 				MediaModel.me().volume = _volumeBar.volumeValue / 100;
-				NResponder.dispatch(AppCMD.MEDIA_SET_VOLUME);
+				NResponder.dispatch(AppCMD.MEDIA_SET_VOLUME,[MediaModel.me().volume]);
 			}
 
 			updateVolumeButton();
@@ -432,7 +447,7 @@ package com.vhall.app.view.control
 
 		protected function onPlayBtnClickHandler(event:MouseEvent):void
 		{
-
+			NResponder.dispatch(AppCMD.VIDEO_CONTROL_TOGGLE);
 		}
 	}
 }

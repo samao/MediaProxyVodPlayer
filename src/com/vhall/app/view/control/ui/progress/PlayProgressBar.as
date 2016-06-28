@@ -172,7 +172,6 @@ package com.vhall.app.view.control.ui.progress
 		/**	点击*/
 		private function onBarClickUp(e:DragEvent):void
 		{
-			stopLoop();
 
 		}
 
@@ -214,9 +213,16 @@ package com.vhall.app.view.control.ui.progress
 			layoutCuePoints();
 		}
 
+		public function get proBar():HDragBar
+		{
+			return this.bar;
+		}
+
 		public function set currentTime(value:Number):void
 		{
 			bar.value = value;
 		}
 	}
 }
+
+

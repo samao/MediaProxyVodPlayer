@@ -292,12 +292,12 @@ package com.vhall.app.view.video
 		{
 			if(bool)
 			{
-				//send(AppCMD.MEDIA_STATES_BUFFER_LOADING);
+				send(AppCMD.MEDIA_STATES_BUFFER_LOADING);
 				send(AppCMD.UI_SHOW_LOADING);
 			}
 			else
 			{
-				//send(AppCMD.MEDIA_STATES_BUFFER_FULL);
+				send(AppCMD.MEDIA_STATES_BUFFER_FULL);
 				send(AppCMD.UI_HIDE_LOADING);
 					//send(AppCMD.UI_HIDE_WARN);
 			}
@@ -348,7 +348,7 @@ package com.vhall.app.view.video
 		}
 		private function seek(value:Number):void
 		{
-			_videoPlayer.time = value;
+			_videoPlayer.time = value*_videoPlayer.duration;
 		}
 		private function start():void
 		{
