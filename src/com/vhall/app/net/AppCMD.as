@@ -32,5 +32,10 @@ package com.vhall.app.net
 		 */		
 		public static const UI_HIDE_LOADING:String = UI+"hide_loading";
 		
+		/**
+		 *打点数据加载完毕 
+		 */		
+		public static const DATA_CUEPOINT_COMP:String = "data_cuepoint_loaded";
+		
 	}
 }

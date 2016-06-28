@@ -55,7 +55,10 @@ package com.vhall.app.view.control
 
 		public function careList():Array
 		{
-			var arr:Array = [AppCMD.MEDIA_CHANGEVIDEO_MODE];
+			var arr:Array = [
+				AppCMD.MEDIA_CHANGEVIDEO_MODE,
+				AppCMD.DATA_CUEPOINT_COMP
+				];
 			return arr;
 		}
 
@@ -90,6 +93,11 @@ package com.vhall.app.view.control
 			{
 				case AppCMD.MEDIA_CHANGEVIDEO_MODE:
 					updateStatus(true);
+					break;
+				case AppCMD.DATA_CUEPOINT_COMP:
+					if(playProgressBar){
+						playProgressBar.showCuePoint();
+					}
 					break;
 			}
 		}

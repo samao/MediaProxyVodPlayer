@@ -7,20 +7,20 @@ package com.vhall.app.view.control.ui.progress
 
 	public class CuePointItem extends UIComponent
 	{
-		public function CuePointItem(parent:DisplayObjectContainer=null, info:UsrDataVo = null, xpos:Number=0, ypos:Number=0)
+		public function CuePointItem(parent:DisplayObjectContainer=null, tinfo:UsrDataVo = null, xpos:Number=0, ypos:Number=0)
 		{
-			pointInfo=info;
+			info=tinfo;
 			super(parent, xpos, ypos);
 		}
 
-		public var pointInfo:Object;
+		public var info:UsrDataVo;
 
 		/**
 		 *获取当前打点的时间比
 		 */
 		public function getTimeRate(ttTime:Number):int
 		{
-			return (pointInfo.time/(ttTime*1000))*100;
+			return (info.time/(ttTime*1000))*100;
 		}
 
 		override protected function createChildren():void

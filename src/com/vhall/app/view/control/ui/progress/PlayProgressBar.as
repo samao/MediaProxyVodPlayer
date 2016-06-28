@@ -6,8 +6,9 @@ package com.vhall.app.view.control.ui.progress
 	import com.vhall.framework.ui.controls.HDragBar;
 	import com.vhall.framework.ui.event.DragEvent;
 	import com.vhall.framework.ui.utils.ComponentUtils;
-	
+
 	import flash.display.DisplayObjectContainer;
+	import flash.events.MouseEvent;
 	import flash.utils.clearTimeout;
 	import flash.utils.setInterval;
 
@@ -60,34 +61,58 @@ package com.vhall.app.view.control.ui.progress
 			bar.finishBGImage.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0xff0000);
 			bar.quadImage.visible = false;
 			bar.bufferBGImage.visible = false;
-			
-			testDate();
+
 			onInitCuePoints();
+		}
+
+		override protected function updateDisplay():void
+		{
+			// TODO Auto Generated method stub
+			super.updateDisplay();
 			layoutCuePoints();
 		}
-		
-		private function testDate():void{
-			var arr:Array = new Array();
-			for (var i:int = 1; i < 11; i++) 
-			{
-				arr[arr.length] = new UsrDataVo("这里是测试1", "hallrecord/481859354/20160427154529/207.jpg",i*10);
-			}
-			Model.Me().docactioninfo.usrdata  = arr;
-		}
-		
+
+
 		protected function onInitCuePoints():void{
-			if(Model.docActionInfo.usrdata &&　Model.docActionInfo.usrdata.length > 0){
+			var tmpCue:CuePointItem;
+			if(cuePoints && cuePoints.length>0){
+				for (var j:int = 0; j < cuePoints.length; j++) 
+				{
+					tmpCue = cuePoints[i];
+					if(tmpCue && tmpCue.parent){
+						tmpCue.parent.removeChild(tmpCue);
+					}
+				}
+
+			}
+			if(Model.docActionInfo.usrdata &&Model.docActionInfo.usrdata.length > 0){
 				cuePoints = new Vector.<CuePointItem>();
 				var cuDatas:Array = Model.docActionInfo.usrdata;
-				var tmpCue:CuePointItem;
+
 				for (var i:int = 0; i < cuDatas.length; i++) 
 				{
 					tmpCue = new CuePointItem(this,cuDatas[i]);
+					tmpCue.addEventListener(MouseEvent.ROLL_OVER,onCueOver);
 					cuePoints[cuePoints.length] = tmpCue;
 				}
 			}
 		}
-		
+
+		protected function onCueOver(event:MouseEvent):void
+		{
+			// TODO Auto-generated method stub
+			this.addEventListener(MouseEvent.ROLL_OUT,onCueOut);
+			var cuePoint:CuePointItem = event.target as CuePointItem;
+			showThumbTip(cuePoint.info);
+		}
+
+		protected function onCueOut(event:MouseEvent):void
+		{
+			// TODO Auto-generated method stub
+			this.removeEventListener(MouseEvent.ROLL_OUT,onCueOut);
+			hideThumbTip();
+		}
+
 		protected function layoutCuePoints():void{
 			if(cuePoints && cuePoints.length > 0){
 				var len:int = cuePoints.length;
@@ -96,7 +121,7 @@ package com.vhall.app.view.control.ui.progress
 				for (var i:int = 0; i < len; i++) 
 				{
 					tmpCue = cuePoints[i];
-					tRate = tmpCue.getTimeRate(100);
+					tRate = tmpCue.getTimeRate(2000);
 					tmpCue.x = width * tRate * 0.01;
 				}
 			}
@@ -122,7 +147,6 @@ package com.vhall.app.view.control.ui.progress
 		{
 			super.sizeChanged();
 			bar.width = width;
-			layoutCuePoints();
 		}
 
 		/**	点击*/
@@ -136,6 +160,26 @@ package com.vhall.app.view.control.ui.progress
 		private function onBarHover(e:DragEvent):void
 		{
 
+		}
+
+		/**
+		 *显示缩略图
+		 *
+		 */
+		protected function showThumbTip(usrVo:UsrDataVo):void{
+
+		}
+		/**
+		 *隐藏缩略图
+		 *
+		 */
+		protected function hideThumbTip():void{
+
+		}
+
+		public function showCuePoint():void{
+			onInitCuePoints();
+			layoutCuePoints();
 		}
 	}
 }
