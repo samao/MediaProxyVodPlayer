@@ -204,9 +204,6 @@ package com.vhall.app.view.control
 
 		override protected function createChildren():void
 		{
-			playProgressBar = new PlayProgressBar(this);
-			playProgressBar.startLoop();
-
 			super.createChildren();
 			hb = new HBox(this);
 			hb.setSize(width / 2, height);
@@ -214,6 +211,8 @@ package com.vhall.app.view.control
 			hb.verticalAlign = "center";
 			hb.horizontalAlign = "right";
 			hb.move(0, 20);
+			playProgressBar = new PlayProgressBar(this);
+//			playProgressBar.startLoop();
 
 			// 静音
 			onInitVolume();

@@ -50,6 +50,12 @@ package com.vhall.app.view.control.ui.progress
 			clearTimeout(loopUint);
 		}
 
+		// 时间tips
+		private var labelTips:TimeTips;
+
+		//缩略图tips
+		private var thumbTips:ThumbTips;
+
 		override protected function createChildren():void
 		{
 			super.createChildren();
@@ -57,11 +63,16 @@ package com.vhall.app.view.control.ui.progress
 			bar = new HDragBar(this);
 			bar.addEventListener(DragEvent.HOVER, onBarHover);
 			bar.addEventListener(DragEvent.UP, onBarClickUp);
+			bar.addEventListener(MouseEvent.ROLL_OUT, onBarOut);
 			bar.backgroundImage.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0x00FFFF);
 			bar.finishBGImage.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0xff0000);
 			bar.quadImage.visible = false;
 			bar.bufferBGImage.visible = false;
 
+			labelTips = new TimeTips(this);
+			labelTips.hide();
+			thumbTips = new ThumbTips(this);
+			thumbTips.hide();
 			onInitCuePoints();
 		}
 
@@ -125,6 +136,12 @@ package com.vhall.app.view.control.ui.progress
 					tmpCue.x = width * tRate * 0.01;
 				}
 			}
+=======
+			labelTips = new TimeTips(this);
+			labelTips.hide();
+			thumbTips = new ThumbTips(this);
+			thumbTips.hide();
+>>>>>>> fb269790a246104f12ec0d3b75b54ba87ca0ddcd
 		}
 
 		/**
@@ -159,7 +176,16 @@ package com.vhall.app.view.control.ui.progress
 		/**	划过*/
 		private function onBarHover(e:DragEvent):void
 		{
+			labelTips.show();
+			labelTips.data = e.percent * 1000 * 1000;
+//			thumbTips.show();
+//			thumbTips.data = new UsrDataVo("hello", "", 1234);
+		}
 
+		private function onBarOut(e:MouseEvent):void
+		{
+			labelTips.hide();
+			thumbTips.hide();
 		}
 
 		/**
