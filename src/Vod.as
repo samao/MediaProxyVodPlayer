@@ -9,6 +9,7 @@ package
 	import com.vhall.app.view.control.ControlLayer;
 	import com.vhall.app.view.debug.DebugLayer;
 	import com.vhall.app.view.popup.PopupLayer;
+	import com.vhall.app.view.video.VideoLayer;
 	import com.vhall.framework.app.manager.StageManager;
 	import com.vhall.framework.app.mvc.IResponder;
 	import com.vhall.framework.app.mvc.ResponderMediator;
@@ -17,6 +18,7 @@ package
 	import com.vhall.framework.log.Logger;
 	import com.vhall.framework.ui.container.Box;
 	import com.vhall.framework.ui.manager.PopupManager;
+
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.system.ApplicationDomain;
@@ -42,7 +44,7 @@ package
 		// 弹框层
 		public var popupLayer:PopupLayer;
 		// 整个视频层
-		public var videoLayer:Layer;
+		public var videoLayer:VideoLayer;
 
 		public function careList():Array
 		{
@@ -63,6 +65,7 @@ package
 		{
 			// TODO Auto Generated method stub
 			super.createChildren();
+			videoLayer = new VideoLayer(this);
 			popupLayer = new PopupLayer(this);
 			controlLayer = new ControlLayer(this);
 			LayerManager.initLayer(this);
@@ -104,6 +107,7 @@ package
 			super.sizeChanged();
 			_height = StageManager.stageHeight;
 			_width = StageManager.stageWidth;
+			videoLayer.setSize(StageManager.stageWidth,StageManager.stageHeight);
 			controlLayer.width = StageManager.stageWidth;
 			popupLayer && popupLayer.setSize(_width, _height);
 		}
@@ -114,3 +118,5 @@ package
 		}
 	}
 }
+
+

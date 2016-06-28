@@ -1,8 +1,8 @@
 /**
  * ===================================
- * Author:	iDzeir					
- * Email:	qiyanlong@wozine.com	
- * Company:	http://www.vhall.com		
+ * Author:	iDzeir
+ * Email:	qiyanlong@wozine.com
+ * Company:	http://www.vhall.com
  * Created:	Jun 2, 2016 5:18:59 PM
  * ===================================
  */
@@ -25,26 +25,26 @@ package com.vhall.app.model
 		/** 当前播放音量*/
 		public var volume:Number = 0.68;
 		/** netconnection地址或者文件路径*/
-		public var netOrFileUrl:String = "rtmp://192.168.1.223/live";
-		
+		public var netOrFileUrl:String = "http://cnhlsvodhls01.e.vhall.com//vhallrecord/471561028/20160624171140/record.m3u8";
+
 		/** 流名称*/		
 		public var streamName:String = "12";
 		/**
-		 *推流地址 
+		 *推流地址
 		 */		
 		public var publishUrl:String = "";
 		/**
-		 *推流 流名 
+		 *推流 流名
 		 */	
 		public var publishStreamName:String = "";
 
 		public var player:IVideoPlayer;
-		
+
 		/**默认为true视频模式，false为语音*/		
 		public var videoMode:Boolean = false;
-		
+
 		public var defaultDefination:String = "high";
-		
+
 		public var _soCamera:String = null;
 		public var _soMicrophone:String = "";
 		public var _soCamWidth:uint = 320;
@@ -52,10 +52,10 @@ package com.vhall.app.model
 		public function MediaModel()
 		{
 			if(_instance) return;
-			
+
 			update();
 		}
-		
+
 		public function update():void
 		{
 			var obj:Object = SOManager.getInstance().getValue("setting");
@@ -67,10 +67,11 @@ package com.vhall.app.model
 			this.volume = obj.micVolume||.68;
 //			this.videoMode = Boolean(Model.Me().meetinginfo.videoMode);
 		}
-		
+
 		public static function me():MediaModel
 		{
 			return _instance ||= new MediaModel();
 		}
 	}
 }
+
