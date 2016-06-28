@@ -1,16 +1,21 @@
 package com.vhall.app.view.control.ui.progress
 {
+	import com.vhall.app.model.Model;
+	import com.vhall.app.model.info.vo.UsrDataVo;
 	import com.vhall.framework.ui.container.Box;
+	import com.vhall.framework.ui.controls.HDragBar;
 	import com.vhall.framework.ui.event.DragEvent;
+	import com.vhall.framework.ui.utils.ComponentUtils;
 
 	import flash.display.DisplayObjectContainer;
+	import flash.events.MouseEvent;
 	import flash.utils.clearTimeout;
 	import flash.utils.setInterval;
 
 	public class PlayProgressBar extends Box
 	{
-
-		public function PlayProgressBar(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0)
+		protected var cuePoints:Vector.<CuePointItem>;
+		public function PlayProgressBar(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number = 0)
 		{
 			super(parent, xpos, ypos);
 		}
@@ -19,8 +24,10 @@ package com.vhall.app.view.control.ui.progress
 		   *循环标示
 			  */
 		protected var loopUint:uint;
-
-		private var bar:TimeHBar;
+		/**
+		 *timebar
+		 */
+		private var bar:HDragBar;
 
 		private var ctime:Number = 0;
 
@@ -31,7 +38,7 @@ package com.vhall.app.view.control.ui.progress
 		public function startLoop():void
 		{
 			stopLoop();
-			loopUint=setInterval(onLoop, 30)
+			loopUint = setInterval(onLoop, 30)
 		}
 
 		/**
@@ -46,16 +53,78 @@ package com.vhall.app.view.control.ui.progress
 		override protected function createChildren():void
 		{
 			super.createChildren();
-
 			// 进度条
-			bar=new TimeHBar(this);
+			bar = new HDragBar(this);
 			bar.addEventListener(DragEvent.HOVER, onBarHover);
-			bar.addEventListener(DragEvent.CLICK, onBarClick);
+			bar.addEventListener(DragEvent.UP, onBarClickUp);
+			bar.backgroundImage.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0x00FFFF);
+			bar.finishBGImage.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0xff0000);
+			bar.quadImage.visible = false;
+			bar.bufferBGImage.visible = false;
+
+			onInitCuePoints();
+		}
+
+		override protected function updateDisplay():void
+		{
+			// TODO Auto Generated method stub
+			super.updateDisplay();
+			layoutCuePoints();
 		}
 
 
-		protected function onInitCuePoint():void{
+		protected function onInitCuePoints():void{
+			var tmpCue:CuePointItem;
+			if(cuePoints && cuePoints.length>0){
+				for (var j:int = 0; j < cuePoints.length; j++) 
+				{
+					tmpCue = cuePoints[i];
+					if(tmpCue && tmpCue.parent){
+						tmpCue.parent.removeChild(tmpCue);
+					}
+				}
 
+			}
+			if(Model.docActionInfo.usrdata &&Model.docActionInfo.usrdata.length > 0){
+				cuePoints = new Vector.<CuePointItem>();
+				var cuDatas:Array = Model.docActionInfo.usrdata;
+
+				for (var i:int = 0; i < cuDatas.length; i++) 
+				{
+					tmpCue = new CuePointItem(this,cuDatas[i]);
+					tmpCue.addEventListener(MouseEvent.ROLL_OVER,onCueOver);
+					cuePoints[cuePoints.length] = tmpCue;
+				}
+			}
+		}
+
+		protected function onCueOver(event:MouseEvent):void
+		{
+			// TODO Auto-generated method stub
+			this.addEventListener(MouseEvent.ROLL_OUT,onCueOut);
+			var cuePoint:CuePointItem = event.target as CuePointItem;
+			showThumbTip(cuePoint.info);
+		}
+
+		protected function onCueOut(event:MouseEvent):void
+		{
+			// TODO Auto-generated method stub
+			this.removeEventListener(MouseEvent.ROLL_OUT,onCueOut);
+			hideThumbTip();
+		}
+
+		protected function layoutCuePoints():void{
+			if(cuePoints && cuePoints.length > 0){
+				var len:int = cuePoints.length;
+				var tmpCue:CuePointItem;
+				var tRate:int
+				for (var i:int = 0; i < len; i++) 
+				{
+					tmpCue = cuePoints[i];
+					tRate = tmpCue.getTimeRate(2000);
+					tmpCue.x = width * tRate * 0.01;
+				}
+			}
 		}
 
 		/**
@@ -64,19 +133,24 @@ package com.vhall.app.view.control.ui.progress
 		 */
 		protected function onLoop():void
 		{
-			// TODO Auto Generated method stub
 			//计算时间
-			var ct:Number=ctime + 0.02;
+			var ct:Number = ctime + 0.02;
 			//如果当前播放时间没有变则返回
-			if (ct == ctime)
+			if(ct == ctime)
 				return;
-			ctime=ct;
-			var tt:Number=30;
-			bar.percent=ct / tt;
+			ctime = ct;
+			var tt:Number = 30;
+			bar.percent = ct / tt;
+		}
+
+		override protected function sizeChanged():void
+		{
+			super.sizeChanged();
+			bar.width = width;
 		}
 
 		/**	点击*/
-		private function onBarClick(e:DragEvent):void
+		private function onBarClickUp(e:DragEvent):void
 		{
 			stopLoop();
 
@@ -88,10 +162,24 @@ package com.vhall.app.view.control.ui.progress
 
 		}
 
-		override protected function sizeChanged():void
-		{
-			super.sizeChanged();
-			bar.width = width;
+		/**
+		 *显示缩略图
+		 *
+		 */
+		protected function showThumbTip(usrVo:UsrDataVo):void{
+
+		}
+		/**
+		 *隐藏缩略图
+		 *
+		 */
+		protected function hideThumbTip():void{
+
+		}
+
+		public function showCuePoint():void{
+			onInitCuePoints();
+			layoutCuePoints();
 		}
 	}
 }

@@ -69,6 +69,10 @@ package com.vhall.app.net
 		public static const MEDIA_STATES_DURATION_UPDATE:String = MEDIA_STATES + "durationUpdate";
 		/** 播放头位置更新*/
 		public static const MEDIA_STATES_TIME_UPDATE:String = MEDIA_STATES + "timeUpdate";
+		/**
+		 *打点数据加载完毕 
+		 */		
+		public static const DATA_CUEPOINT_COMP:String = "data_cuepoint_loaded";
 		
 	}
 }

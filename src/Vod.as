@@ -6,6 +6,8 @@ package
 	import com.vhall.app.manager.LayerManager;
 	import com.vhall.app.model.DocCuepointServer;
 	import com.vhall.app.model.Model;
+	import com.vhall.app.model.info.vo.UsrDataVo;
+	import com.vhall.app.net.AppCMD;
 	import com.vhall.app.view.control.ControlLayer;
 	import com.vhall.app.view.debug.DebugLayer;
 	import com.vhall.app.view.popup.PopupLayer;
@@ -24,6 +26,8 @@ package
 	import flash.system.ApplicationDomain;
 	import flash.system.Security;
 	import flash.ui.Keyboard;
+
+	import appkit.responders.NResponder;
 
 	public class Vod extends Box implements IResponder
 	{
@@ -96,9 +100,10 @@ package
 		protected function onDocMsg(item:Object, content:Object, domain:ApplicationDomain):void
 		{
 			// TODO Auto Generated method stub
-			var obj:Object = JSON.stringify(content);
+			var obj:Object = JSON.parse(String(content));
 			Model.docActionInfo.cuepoint = obj.cuepoint as Array;
-			Model.docActionInfo.usrdata = obj.usrdata as Array;
+			Model.docActionInfo.setupUsrData(obj.usrdata as Array)
+			NResponder.dispatch(AppCMD.DATA_CUEPOINT_COMP);
 			DocCuepointServer.getInstance();
 		}
 
