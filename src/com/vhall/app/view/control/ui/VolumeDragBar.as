@@ -24,19 +24,19 @@ package com.vhall.app.view.control.ui
 		override protected function onDragStart(e:MouseEvent = null):void
 		{
 			super.onDragStart();
-			quad.startDrag(false, new Rectangle(-quad.width/2+10, quad.y, width - quad.width/2, 0));
+			_quad.startDrag(false, new Rectangle(-_quad.width/2+10, _quad.y, width - _quad.width/2, 0));
 			draging = true;
 		}
 		
 		override protected function initSkin():void{
-			bg.source = getBgSource();
-			buffer.source = ComponentUtils.genInteractiveRect(94, 6, null, 5, 10, 0x000000);
-			finished.source = ComponentUtils.genInteractiveRect(94, 6, null, 5, 10, 0XDE403D);
-			quad.source = ComponentUtils.genInteractiveRect(21, 21, null,0,0,0x000000);
+			_bg.source = getBgSource();
+			_buffer.source = ComponentUtils.genInteractiveRect(94, 6, null, 5, 10, 0x000000);
+			_finished.source = ComponentUtils.genInteractiveRect(94, 6, null, 5, 10, 0XDE403D);
+			_quad.source = ComponentUtils.genInteractiveRect(21, 21, null,0,0,0x000000);
 			quadSkin = "assets/ui/quad.png";
-			quad.setSize(18,18);
-			buffer.move(5,10);
-			finished.move(5,10);
+			_quad.setSize(18,18);
+			_buffer.move(5,10);
+			_finished.move(5,10);
 		}
 		
 		protected function getBgSource():Shape{
@@ -52,7 +52,7 @@ package com.vhall.app.view.control.ui
 		 * 
 		 */		
 		public function set bgVisible(visible:Boolean):void{
-			bg.visible = visible
+			_bg.visible = visible
 		}
 	}
 }

@@ -1,7 +1,10 @@
 package com.vhall.app.view.control.ui.progress
 {
 	import com.vhall.framework.ui.container.Box;
+	import com.vhall.framework.ui.controls.HDragBar;
 	import com.vhall.framework.ui.event.DragEvent;
+	import com.vhall.framework.ui.utils.ComponentUtils;
+
 	import flash.display.DisplayObjectContainer;
 	import flash.utils.clearTimeout;
 	import flash.utils.setInterval;
@@ -21,7 +24,7 @@ package com.vhall.app.view.control.ui.progress
 		/**
 		 *timebar
 		 */
-		private var bar:TimeHBar;
+		private var bar:HDragBar;
 
 		private var ctime:Number = 0;
 
@@ -49,10 +52,13 @@ package com.vhall.app.view.control.ui.progress
 			super.createChildren();
 
 			// 进度条
-			bar = new TimeHBar(this);
+			bar = new HDragBar(this);
 			bar.addEventListener(DragEvent.HOVER, onBarHover);
 			bar.addEventListener(DragEvent.UP, onBarClickUp);
-
+			bar.backgroundImage.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0x00FFFF);
+			bar.finishBGImage.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0xff0000);
+			bar.quadImage.visible = false;
+			bar.bufferBGImage.visible = false;
 		}
 
 		/**
