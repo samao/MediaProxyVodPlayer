@@ -1,17 +1,19 @@
 package com.vhall.app.view.control.ui.progress
 {
+	import com.vhall.app.model.Model;
+	import com.vhall.app.model.info.vo.UsrDataVo;
 	import com.vhall.framework.ui.container.Box;
 	import com.vhall.framework.ui.controls.HDragBar;
 	import com.vhall.framework.ui.event.DragEvent;
 	import com.vhall.framework.ui.utils.ComponentUtils;
-
+	
 	import flash.display.DisplayObjectContainer;
 	import flash.utils.clearTimeout;
 	import flash.utils.setInterval;
 
 	public class PlayProgressBar extends Box
 	{
-
+		protected var cuePoints:Vector.<CuePointItem>;
 		public function PlayProgressBar(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number = 0)
 		{
 			super(parent, xpos, ypos);
@@ -50,7 +52,6 @@ package com.vhall.app.view.control.ui.progress
 		override protected function createChildren():void
 		{
 			super.createChildren();
-
 			// 进度条
 			bar = new HDragBar(this);
 			bar.addEventListener(DragEvent.HOVER, onBarHover);
@@ -59,6 +60,46 @@ package com.vhall.app.view.control.ui.progress
 			bar.finishBGImage.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0xff0000);
 			bar.quadImage.visible = false;
 			bar.bufferBGImage.visible = false;
+			
+			testDate();
+			onInitCuePoints();
+			layoutCuePoints();
+		}
+		
+		private function testDate():void{
+			var arr:Array = new Array();
+			for (var i:int = 1; i < 11; i++) 
+			{
+				arr[arr.length] = new UsrDataVo("这里是测试1", "hallrecord/481859354/20160427154529/207.jpg",i*10);
+			}
+			Model.Me().docactioninfo.usrdata  = arr;
+		}
+		
+		protected function onInitCuePoints():void{
+			if(Model.docActionInfo.usrdata &&　Model.docActionInfo.usrdata.length > 0){
+				cuePoints = new Vector.<CuePointItem>();
+				var cuDatas:Array = Model.docActionInfo.usrdata;
+				var tmpCue:CuePointItem;
+				for (var i:int = 0; i < cuDatas.length; i++) 
+				{
+					tmpCue = new CuePointItem(this,cuDatas[i]);
+					cuePoints[cuePoints.length] = tmpCue;
+				}
+			}
+		}
+		
+		protected function layoutCuePoints():void{
+			if(cuePoints && cuePoints.length > 0){
+				var len:int = cuePoints.length;
+				var tmpCue:CuePointItem;
+				var tRate:int
+				for (var i:int = 0; i < len; i++) 
+				{
+					tmpCue = cuePoints[i];
+					tRate = tmpCue.getTimeRate(100);
+					tmpCue.x = width * tRate * 0.01;
+				}
+			}
 		}
 
 		/**
@@ -81,6 +122,7 @@ package com.vhall.app.view.control.ui.progress
 		{
 			super.sizeChanged();
 			bar.width = width;
+			layoutCuePoints();
 		}
 
 		/**	点击*/

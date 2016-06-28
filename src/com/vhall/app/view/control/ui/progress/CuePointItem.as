@@ -20,14 +20,13 @@ package com.vhall.app.view.control.ui.progress
 		 */
 		public function getTimeRate(ttTime:Number):int
 		{
-			return (pointInfo.time/ttTime*1000)*100;
+			return (pointInfo.time/(ttTime*1000))*100;
 		}
 
 		override protected function createChildren():void
 		{
 			// TODO Auto Generated method stub
 			super.createChildren();
-
 			this.graphics.beginFill(0xff,.8);
 			this.graphics.drawRect(0,0,5,10);
 			this.graphics.endFill();
