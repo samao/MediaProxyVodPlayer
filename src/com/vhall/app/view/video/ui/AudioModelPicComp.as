@@ -1,38 +1,36 @@
 /**
  * ===================================
- * Author:	iDzeir					
- * Email:	qiyanlong@wozine.com	
- * Company:	http://www.vhall.com		
+ * Author:	iDzeir
+ * Email:	qiyanlong@wozine.com
+ * Company:	http://www.vhall.com
  * Created:	Jun 8, 2016 2:11:33 PM
  * ===================================
  */
 
-package com.vhall.app.view.video
+package com.vhall.app.view.video.ui
 {
-	import com.vhall.app.model.MediaModel;
-	import com.vhall.app.model.Model;
 	import com.vhall.framework.app.manager.StageManager;
 	import com.vhall.framework.ui.controls.UIComponent;
-	
+
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import flash.media.SoundMixer;
 	import flash.utils.ByteArray;
 	import flash.utils.setTimeout;
-	
+
 	public class AudioModelPicComp extends UIComponent
 	{
 		private var isTimeRun:Boolean = false;
 		private var byte:ByteArray = new ByteArray();
-		
+
 		public var _skin:MovieClip;
-		
+
 		public function AudioModelPicComp()
 		{
 			this.addEventListener(Event.ADDED_TO_STAGE,onAddedToStage);
 			this.addEventListener(Event.REMOVED_FROM_STAGE,onRemovedFromStage);
 		}
-		
+
 		protected function onAddedToStage(event:Event=null):void
 		{
 			// TODO Auto Generated method stub
@@ -40,31 +38,31 @@ package com.vhall.app.view.video
 			runTime();
 			resizeHandler();
 		}
-		
+
 		protected function resizeHandler(e:Event = null):void
 		{
 			StageManager.stage && resize(StageManager.stage.stageWidth,StageManager.stage.stageHeight);
 		}
-		
+
 		public function set skin(value:MovieClip):void
 		{
 			_skin = value.getChildAt(0) as MovieClip;
 			this.addChild(_skin);
 		}
-		
+
 		protected function onRemovedFromStage(event:Event=null):void
 		{
 			// TODO Auto Generated method stub
 			isTimeRun = false;
 		}
-		
+
 		private function runTime():void{
 			if(isTimeRun){
 				setTimeout(updateVoic,200);
 				isTimeRun = true;
 			}
 		}
-		
+
 		override protected function sizeChanged():void
 		{
 			// TODO Auto Generated method stub
@@ -73,8 +71,8 @@ package com.vhall.app.view.video
 			var shight:int = StageManager.stageHeight;
 			resize(swidth,shight)
 		}
-		
-		
+
+
 		public function resize(swidth:int,shight:int):void{
 			if(!_skin) return;
 			var mc:MovieClip = _skin["pic"];
@@ -91,7 +89,7 @@ package com.vhall.app.view.video
 			}
 			mc.x = (320 - mc.width)/2;
 			mc.y = (240 - mc.height)/2;
-			
+
 			vocmc.x =  (320 - vocmc.scaleX*400)/2;
 			vocmc.y = (240 - vocmc.scaleY*400)/2;
 			try{
@@ -100,9 +98,9 @@ package com.vhall.app.view.video
 			_skin.x = swidth - _skin.width >> 1;
 			_skin.y = shight - _skin.height >> 1;
 		}
-		
+
 		/**
-		 *更新音量 
+		 *更新音量
 		 */		
 		public function updateVoic():void{
 			runTime();
@@ -119,29 +117,14 @@ package com.vhall.app.view.video
 				vocmc.gotoAndStop(4);
 			}
 		}
-		
+
 		private function get activity():Number
 		{
-			if(Model.userInfo.is_pres && MediaModel.me().player&&MediaModel.me().player.usedMic && !MediaModel.me().player.usedCam)
-			{
-				//Logger.getLogger("[mic level:]").info("当前获取音量：",MediaModel.me().player.usedMic.activityLevel);
-				var micactvielevel:Number = MediaModel.me().player.usedMic.activityLevel;
-				if(micactvielevel < 20)
-				{
-					return 0;
-				}else if(micactvielevel < 40){
-					return 20;
-				}else if(micactvielevel < 60){
-					return 40;
-				}else{
-					return 75;
-				}
-			}
 			var left:Number = 0;
 			var right:Number = 0;
 			const PLOT_HEIGHT:int = 100; 
 			const CHANNEL_LENGTH:int = 256; 
-			
+
 			try
 			{
 				SoundMixer.computeSpectrum(byte, true, 0); 
@@ -151,7 +134,7 @@ package com.vhall.app.view.video
 				var n:Number;
 				for (var i:int = 0; i < CHANNEL_LENGTH*2; i++) 
 				{
-					
+
 					n= (byte.readFloat() * PLOT_HEIGHT);
 					if(n >0){
 						max += n;
@@ -162,9 +145,10 @@ package com.vhall.app.view.video
 			} 
 			catch(error:Error) 
 			{
-				
+
 			}
 			return (max - min)/CHANNEL_LENGTH/2.2*10;
 		}
 	}	
 }
+
