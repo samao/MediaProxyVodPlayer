@@ -1,11 +1,10 @@
 package com.vhall.app.view.popup.ui
 {
 	import com.vhall.framework.ui.container.Box;
-	
+
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
-	import flash.utils.getDefinitionByName;
-	
+
 	public class MainLoading extends Box
 	{
 		private var lineLoading:MovieClip;
@@ -13,14 +12,14 @@ package com.vhall.app.view.popup.ui
 		{
 			super(parent, xpos, ypos);
 		}
-		
+
 		override protected function createChildren():void
 		{
 			// TODO Auto Generated method stub
 			super.createChildren();
-			var cla:Class = getDefinitionByName("logo4") as Class;
-			lineLoading = new cla();
+			lineLoading = new logo4();
 			this.addChild(lineLoading);
 		}
 	}
 }
+

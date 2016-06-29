@@ -20,9 +20,11 @@ package com.vhall.app.model.info
 		/***是否显示线路（cdn线路切换）*/
 		public var lineType:int = 1;
 		/***当前播放模式（RTMP/HLS） */
-		public var playMode:String = PlayMode.PLAY_RTMP;
+		public var playMode:String = PlayMode.PLAY_HLS;
 		/***是否显示音频切换  */
 		public var streamType:int = 1;
 		public var viewVideoMode:Boolean = true;
 	}
 }
+
+

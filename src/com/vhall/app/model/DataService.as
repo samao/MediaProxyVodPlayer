@@ -34,7 +34,7 @@ package com.vhall.app.model
 		 */		
 		public static function updatePlayTypeMode():void{
 			var sline:String = "";
-			if(Model.videoInfo.selectLineVo){
+			if(Model.videoInfo && Model.videoInfo.selectLineVo){
 				sline = Model.videoInfo.selectLineVo.serverUrl;
 			}
 			if(sline.toLocaleLowerCase().indexOf(PlayMode.HLS_FILE_SUFFIXES)>0){
@@ -99,6 +99,7 @@ package com.vhall.app.model
 		 * <br>3.hls 视频/视频 只需要给serverUrl 没有fileName 只需要选择线路，没有清晰度
 		 */	
 		public static function updateMediaInfo():void{
+			updatePlayTypeMode();
 			var initfail:int = 0;
 			if(Model.playerStatusInfo == null) initfail = 1;
 			if(Model.videoInfo == null) initfail = 2;
