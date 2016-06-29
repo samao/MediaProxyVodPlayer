@@ -58,7 +58,7 @@ package com.vhall.app.view.control
 
 		public function careList():Array
 		{
-			var arr:Array = [AppCMD.MEDIA_CHANGEVIDEO_MODE, AppCMD.DATA_CUEPOINT_COMP, AppCMD.CUE_POINT_CLICK, AppCMD.MEDIA_STATES_DURATION_UPDATE, AppCMD.MEDIA_STATES_TIME_UPDATE];
+			var arr:Array = [AppCMD.MEDIA_CHANGEVIDEO_MODE, AppCMD.DATA_CUEPOINT_COMP, AppCMD.CUE_POINT_CLICK, AppCMD.MEDIA_STATES_DURATION_UPDATE, AppCMD.MEDIA_STATES_TIME_UPDATE,AppCMD.MEDIA_STATES_PAUSE,AppCMD.MEDIA_STATES_UNPAUSE];
 			return arr;
 		}
 
@@ -111,6 +111,12 @@ package com.vhall.app.view.control
 				case AppCMD.MEDIA_STATES_TIME_UPDATE:
 					this.time.currentTime = MediaModel.me().player.time * 1000;
 					this.playProgressBar.proBar.value = MediaModel.me().player.time * 1000;
+					break;
+				case AppCMD.MEDIA_STATES_UNPAUSE:
+					btnPlay.setSelected(true);
+					break;
+				case AppCMD.MEDIA_STATES_PAUSE:
+					btnPlay.setSelected(false);
 					break;
 			}
 		}

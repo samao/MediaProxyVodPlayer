@@ -19,6 +19,7 @@ package com.vhall.app.view.video.ui
 		public function RecLayer(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0)
 		{
 			super(parent, xpos, ypos);
+			_layerId = "RecLayer";
 		}
 
 		override protected function createCmdMapper():void
