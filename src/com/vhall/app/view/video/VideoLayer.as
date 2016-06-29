@@ -9,33 +9,40 @@
 
 package com.vhall.app.view.video
 {
-	import com.vhall.app.common.Layer;
+	import com.vhall.app.common.Resource;
 	import com.vhall.app.model.DataService;
 	import com.vhall.app.model.MediaModel;
 	import com.vhall.app.net.AppCMD;
+	import com.vhall.app.view.video.command.VideoCMD;
+	import com.vhall.app.view.video.ui.AudioModelPicComp;
+	import com.vhall.app.view.video.ui.FastLayer;
+	import com.vhall.app.view.video.ui.VideoInteractive;
 	import com.vhall.framework.app.manager.StageManager;
 	import com.vhall.framework.app.mvc.IResponder;
-	import com.vhall.framework.log.Logger;
+	import com.vhall.framework.load.ResourceLoader;
 	import com.vhall.framework.media.provider.MediaProxyStates;
 	import com.vhall.framework.media.provider.MediaProxyType;
 	import com.vhall.framework.media.video.VideoPlayer;
 
 	import flash.display.DisplayObjectContainer;
+	import flash.display.MovieClip;
+	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
-	import flash.events.MouseEvent;
 	import flash.geom.Rectangle;
+	import flash.system.ApplicationDomain;
 	import flash.utils.clearInterval;
 	import flash.utils.clearTimeout;
 	import flash.utils.setInterval;
 
 	import appkit.responders.NResponder;
 
-	public class VideoLayer extends Layer implements IResponder
+	public class VideoLayer extends FastLayer implements IResponder
 	{
 		private var _videoPlayer:VideoPlayer;
 
 		/**播放时间当前位置计时器id*/
 		private var _postionId:int;
+		private const CHECKER_INTERVAL:uint = 250;
 		/**上一次计时器获取的视频播放时间*/
 		private var _preTime:Number = 0;
 
@@ -45,24 +52,43 @@ package com.vhall.app.view.video
 		/**拉流重试最大次数*/
 		private const MAX_RETRY:uint = 16;
 
-		private var _commandMaper:ICommandMapper;
+		/**麦克状态ui*/
+		private var _micActivity:AudioModelPicComp;
+		/**是否循环播放*/		
+		private var _loop:Boolean = true;
+
+		private var _micActivBox:Sprite;
+		//广告内容
+		private var _adsBox:Sprite;
+		//播放结束推荐内容
+		private var _recBox:Sprite;
+
+		//屏幕交互元件
+		private var _videoInteractive:VideoInteractive;
 
 		public function VideoLayer(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0)
 		{
-			createCmdMapper();
 			super(parent, xpos, ypos);
+			_layerId = "videoLayer";
 		}
 
-		private function createCmdMapper():void
+		/**
+		 * 创建command和处理函数映射
+		 */		
+		override protected function createCmdMapper():void
 		{
-			_commandMaper = new CommandMapper()
-				.mapTo(pause,AppCMD.VIDEO_CONTROL_PAUSE)
+			super.createCmdMapper();
+
+			_commandMaper.mapTo(pause,AppCMD.VIDEO_CONTROL_PAUSE)
 				.mapTo(resume,AppCMD.VIDEO_CONTROL_RESUME)
 				.mapTo(seek,AppCMD.VIDEO_CONTROL_SEEK)
 				.mapTo(start,AppCMD.VIDEO_CONTROL_START)
 				.mapTo(stop,AppCMD.VIDEO_CONTROL_STOP)
 				.mapTo(toggle,AppCMD.VIDEO_CONTROL_TOGGLE)
-				.mapTo(volume,AppCMD.MEDIA_SET_VOLUME);
+				.mapTo(volume,AppCMD.MEDIA_SET_VOLUME)
+				.mapTo(play,AppCMD.MEDIA_SWITCH_LINE)
+				.mapTo(play,AppCMD.MEDIA_SWITCH_QUALITY)
+				.mapTo(changeVodMode,AppCMD.MEDIA_CHANGEVIDEO_MODE);
 		}
 
 		override protected function createChildren():void
@@ -73,14 +99,59 @@ package com.vhall.app.view.video
 			_videoPlayer.volume = info.volume;
 			addChild(_videoPlayer);
 
-			doubleClickEnabled = true;
-			mouseChildren = false;
+			_micActivBox ||= new Sprite();
+			addChild(_micActivBox);
 
-			addEventListener(MouseEvent.DOUBLE_CLICK, mouseHandler);
+			mouseEnabled = false;
+
+			_videoInteractive = new VideoInteractive(this);
+
+			NResponder.addNative(_videoInteractive,VideoCMD.DOUBLE_CLICK,function():void
+			{
+				StageManager.toggleFullscreen();
+			});
+			NResponder.addNative(_videoInteractive,VideoCMD.SINGLE_CLICK,function():void
+			{
+				_videoPlayer.toggle();
+			});
+
+			//加载语音状态麦克皮肤
+			var l:ResourceLoader = new ResourceLoader();
+			l.load({type:1, url:Resource.getResource("MicrophoneActivity")}, function(item:Object, content:Object, domain:ApplicationDomain):void
+			{
+				_micActivity = new AudioModelPicComp();
+				_micActivity.skin = content as MovieClip;
+			}, null, function():void
+			{
+				log("加载语音状态资源失败");
+			});
 
 			play();
 		}
 
+		/**
+		 * 改变当前播放模式，mediamodel.videomode = false为视频模式，true为语音模式
+		 */		
+		private function changeVodMode():void
+		{
+			log("videoMode:", info.videoMode);
+			if(!info.videoMode)
+			{
+				_micActivity && _micActivBox.contains(_micActivity) && _micActivBox.removeChild(_micActivity);
+				//_videoPlayer.start();
+				_videoPlayer.visible = true;
+			}
+			else
+			{
+				_micActivity && _micActivBox.addChild(_micActivity);
+				//_videoPlayer.stop();
+				_videoPlayer.visible = false;
+			}
+		}
+
+		/**
+		 * 播放视频
+		 */		
 		private function play():void
 		{
 			_preTime = 0;
@@ -96,21 +167,6 @@ package com.vhall.app.view.video
 				_videoPlayer.attachType(protocol(server), server, stream);
 			}
 			_videoPlayer.visible = true;
-		}
-
-		private function mouseHandler(e:MouseEvent):void
-		{
-			switch(e.type)
-			{
-				case MouseEvent.CLICK:
-					_videoPlayer.toggle();
-					//_videoPlayer.isPlaying?send():send();
-					break;
-				case MouseEvent.DOUBLE_CLICK:
-					//全屏切换
-					StageManager.toggleFullscreen(e);
-					break;
-			}
 		}
 
 		/**
@@ -141,6 +197,7 @@ package com.vhall.app.view.video
 		override public function setSize(w:Number, h:Number):void
 		{
 			super.setSize(w, h);
+			_videoInteractive.setSize(w,h);
 			if(stage)
 			{
 				var rect:Rectangle = null;
@@ -197,7 +254,7 @@ package com.vhall.app.view.video
 		}
 
 		/**
-		 * 清楚计时器
+		 * 清除计时器
 		 */
 		private function clearTimer():void
 		{
@@ -233,12 +290,13 @@ package com.vhall.app.view.video
 
 		private function videoHandler(states:String, ... value):void
 		{
+			log("视频状态：",states);
 			switch(states)
 			{
 				case MediaProxyStates.CONNECT_NOTIFY:
 					log("通道建立成功");
 					clearTimer();
-					_postionId = setInterval(timeCheck, 1000);
+					_postionId = setInterval(timeCheck, CHECKER_INTERVAL);
 					_retryTimes = 0;
 					loading = true;
 					break;
@@ -261,6 +319,7 @@ package com.vhall.app.view.video
 					break;
 				case MediaProxyStates.STREAM_STOP:
 					send(AppCMD.MEDIA_STATES_FINISH);
+					_loop && play();
 					break;
 				case MediaProxyStates.STREAM_TRANSITION:
 				case MediaProxyStates.STREAM_FULL:
@@ -276,7 +335,7 @@ package com.vhall.app.view.video
 					log("视频时长:" + _videoPlayer.duration);
 					break;
 				case MediaProxyStates.SEEK_COMPLETE:
-					//send(AppCMD.MEDIA_STATES_SEEK_COMPLETE);
+					send(AppCMD.MEDIA_STATES_SEEK_COMPLETE);
 					break;
 				case MediaProxyStates.SEEK_FAILED:
 					send(AppCMD.MEDIA_STATES_SEEK_FAIL);
@@ -326,16 +385,6 @@ package com.vhall.app.view.video
 				NResponder.dispatch(action);
 		}
 
-		public function careList():Array
-		{
-			return _commandMaper.cmds;
-		}
-
-		public function handleCare(msg:String, ...parameters):void
-		{
-			_commandMaper.excute(msg,parameters);
-		}
-
 		//----------播放器控制
 		private function pause():void
 		{
@@ -365,15 +414,6 @@ package com.vhall.app.view.video
 		private function volume(value:Number):void
 		{
 			_videoPlayer.volume = value;
-		}
-
-		/**
-		 * 统一打印日志
-		 * @param value
-		 */
-		private function log(... value):void
-		{
-			Logger.getLogger("VideoLayer").info(value);
 		}
 	}
 }

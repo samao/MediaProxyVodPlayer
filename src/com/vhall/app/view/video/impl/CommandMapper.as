@@ -7,9 +7,10 @@
  * ===================================
  */
 
-package com.vhall.app.view.video
+package com.vhall.app.view.video.impl
 {
 	import flash.utils.Dictionary;
+	import com.vhall.app.view.video.api.ICommandMapper;
 
 	public class CommandMapper implements ICommandMapper
 	{
