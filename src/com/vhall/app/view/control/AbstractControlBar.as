@@ -4,7 +4,7 @@ package com.vhall.app.view.control
 	import com.vhall.framework.tween.AppTween;
 	import com.vhall.framework.ui.container.Box;
 	import com.vhall.framework.ui.controls.Image;
-	
+
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.StageDisplayState;
@@ -48,17 +48,18 @@ package com.vhall.app.view.control
 			bg = new Image(this);
 			bg.rect = new Rectangle(4,4,10,10);
 			bg.source = "assets/ui/bg.png";
-			
+
 			// 默认来一发
 			onStageMouseMove(null);
 			StageManager.stage.addEventListener(FullScreenEvent.FULL_SCREEN, onFull);
 			this.addEventListener(Event.ADDED_TO_STAGE,onAddStage);
 		}
-		
+
 		override protected function sizeChanged():void
 		{
 			super.sizeChanged();
 			bg.width = width;
+			bg.height = height;
 		}
 
 		protected function onAddStage(event:Event):void
@@ -67,59 +68,59 @@ package com.vhall.app.view.control
 			this.addEventListener(Event.REMOVED_FROM_STAGE,onRemoveStage);
 			addStageLsn();
 		}
-		
+
 		protected function onRemoveStage(event:Event):void
 		{
 			// TODO Auto-generated method stub
 			removeStageLsn();
 		}
-		
+
 		/**
-		 *监听鼠标移入 
-		 * 
+		 *监听鼠标移入
+		 *
 		 */		
 		protected function addStageLsn():void{
 			StageManager.stage.addEventListener(Event.MOUSE_LEAVE, onStageMouseLeave);
 			StageManager.stage.addEventListener(MouseEvent.MOUSE_DOWN,onStageMouseDown);
 			StageManager.stage.addEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 			addLocalLsn();
-			
+
 		}
 		/**
-		 *移除 鼠标移动，鼠标一处，鼠标移入 
-		 * 
+		 *移除 鼠标移动，鼠标一处，鼠标移入
+		 *
 		 */		
 		protected function removeStageLsn():void{
 			StageManager.stage.removeEventListener(Event.MOUSE_LEAVE, onStageMouseLeave);
 			StageManager.stage.removeEventListener(MouseEvent.MOUSE_DOWN,onStageMouseDown);
 			StageManager.stage.removeEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 			removeLocalLsn();
-			
+
 		}
-		
+
 		/**
 		 *自身监听和stage监听分离  隐藏优化监听
-		 * 
+		 *
 		 */		
 		protected function addLocalLsn():void{
 			if(!this.hasEventListener(MouseEvent.ROLL_OVER)){
 				this.addEventListener(MouseEvent.ROLL_OVER,onMouseOver);
 			}
 		}
-		
+
 		/**
-		 *自身监听和stage监听分离 
-		 * 
+		 *自身监听和stage监听分离
+		 *
 		 */	
 		protected function removeLocalLsn():void{
 			this.removeEventListener(MouseEvent.ROLL_OVER,onMouseOver);
 			this.removeEventListener(MouseEvent.ROLL_OUT,onMouseOut);
 			this.removeEventListener(MouseEvent.MOUSE_MOVE,onMouseMove);
 		}
-		
+
 		/**
 		 *鼠标移入时监听鼠标移动和移出  并且停止鼠标检测（防止鼠标在controlbar时，继续执行隐藏检测）
-		 * 
+		 *
 		 */		
 		protected function onMouseOver(event:MouseEvent):void
 		{
@@ -128,11 +129,11 @@ package com.vhall.app.view.control
 			this.addEventListener(MouseEvent.MOUSE_MOVE,onMouseMove);
 			this.stopMouseCheck();
 		}
-		
+
 		/**
 		 *鼠标移出，开始执行舞台鼠标交互检测
 		 * @param event
-		 * 
+		 *
 		 */		
 		protected function onMouseOut(event:MouseEvent):void
 		{
@@ -148,17 +149,17 @@ package com.vhall.app.view.control
 			this.startMouseCheck();
 		}	
 		/**
-		 *移动式停止冒泡，防止舞台检测鼠标交互导致隐藏controlbar 
+		 *移动式停止冒泡，防止舞台检测鼠标交互导致隐藏controlbar
 		 * @param event
-		 * 
+		 *
 		 */		
 		protected function onMouseMove(event:MouseEvent):void
 		{
 			// TODO Auto-generated method stub
 			event.stopImmediatePropagation();
 		}
-		
-		
+
+
 		protected function onStageMouseDown(event:MouseEvent):void
 		{
 			// TODO Auto-generated method stub
@@ -169,10 +170,10 @@ package com.vhall.app.view.control
 				showBar();
 			}
 		}
-		
+
 		/**
-		 *检测是否自己 
-		 * 
+		 *检测是否自己
+		 *
 		 */		
 		protected function checkSelfChild(dsp:DisplayObject):Boolean{
 			var boo:Boolean = false;
@@ -185,7 +186,7 @@ package com.vhall.app.view.control
 			}
 			return false;
 		}
-		
+
 		protected function onStageMouseMove(event:MouseEvent):void
 		{
 			clearTimeout(checkTimer);
@@ -212,10 +213,10 @@ package com.vhall.app.view.control
 			}
 			hideBar();
 		}
-		
+
 		protected function onFull(e:FullScreenEvent):void
 		{
-			
+
 		}
 
 		/**	显示控制栏*/
@@ -231,24 +232,24 @@ package com.vhall.app.view.control
 			AppTween.to(this, .35, {y:this.height});
 			onHide();
 		}
-		
+
 		protected function onShow():void{
 			addLocalLsn();
 		}
-		
+
 		protected function onHide():void{
 			removeLocalLsn();
 		}
-		
+
 		override public function destory():void
 		{
 			super.destory();
 			removeStageLsn();
 		}
-		
+
 		/**
 		 *停止交互检测  停止检测后，不会隐藏控制栏
-		 * 
+		 *
 		 */		
 		public function stopMouseCheck():void{
 			clearTimeout(checkTimer);
@@ -256,18 +257,18 @@ package com.vhall.app.view.control
 		}
 		/**
 		 *开始检测，最少两秒后隐藏控制栏
-		 * 
+		 *
 		 */	
 		public function startMouseCheck():void{
 			clearTimeout(checkTimer);
 			checkTimer = setTimeout(onDelayCheckMouse, HIDE_CHECK_TIME);
 		}
-		
-		
+
+
 		/**
-		 * 禁用/启用 
+		 * 禁用/启用
 		 * @param enable
-		 * 
+		 *
 		 */		
 		public function setEnable(enable:Boolean):void{
 			this.mouseEnabled = this.mouseChildren = enable;
@@ -275,3 +276,5 @@ package com.vhall.app.view.control
 
 	}
 }
+
+

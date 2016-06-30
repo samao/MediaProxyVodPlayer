@@ -1,12 +1,10 @@
 package
 {
-	import com.vhall.app.common.Layer;
 	import com.vhall.app.common.controller.MenuController;
 	import com.vhall.app.common.controller.MessageController;
 	import com.vhall.app.manager.LayerManager;
 	import com.vhall.app.model.DocCuepointServer;
 	import com.vhall.app.model.Model;
-	import com.vhall.app.model.info.vo.UsrDataVo;
 	import com.vhall.app.net.AppCMD;
 	import com.vhall.app.view.control.ControlLayer;
 	import com.vhall.app.view.debug.DebugLayer;
