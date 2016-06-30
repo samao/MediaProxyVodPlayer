@@ -1,10 +1,13 @@
 package com.vhall.app.model
 {
+	import com.vhall.app.net.AppCMD;
 	import com.vhall.app.net.WebAJMessage;
 	import com.vhall.framework.log.Logger;
 
 	import flash.utils.clearTimeout;
 	import flash.utils.setInterval;
+
+	import appkit.responders.NResponder;
 
 	/**
 	 *doc打点数据上报服务
@@ -29,7 +32,15 @@ package com.vhall.app.model
 		public function DocCuepointServer()
 		{
 			//监听当播放时,开始start
+			NResponder.add(AppCMD.MEDIA_STATES_START,onStart);
 			//监听seek时
+			NResponder.add(AppCMD.VIDEO_CONTROL_SEEK,toSeekCuePointInfo);
+		}
+
+		protected function onStart():void
+		{
+			// TODO Auto Generated method stub
+			startCuePointLoop(true);
 		}
 
 		protected var cuepointLoogUint:uint;
@@ -44,7 +55,7 @@ package com.vhall.app.model
 		{
 			var cues:Array = Model.docActionInfo.cuepoint;
 			//当前时间
-			var ctime:Number = 0;
+			var ctime:Number = MediaModel.me().player.time;
 			for(var i:int = cues.length; i >= 0; i--)
 			{
 				if(ctime > Number(cues[i].created_at))
@@ -74,6 +85,7 @@ package com.vhall.app.model
 
 		public function toSeekCuePointInfo(time:Number):void
 		{
+			var ttime:Number = MediaModel.me().player.duration * time;
 			var cues:Array = Model.docActionInfo.cuepoint;
 			if(cues == null || cues.length < 0)
 			{
@@ -89,7 +101,7 @@ package com.vhall.app.model
 				for(var i:int = 0; i < len; i++)
 				{
 					var cut:Object = cues[i];
-					if(time > Number(cut.created_at))
+					if(ttime > Number(cut.created_at))
 					{
 						if(toCheckFilp(cut))
 						{
