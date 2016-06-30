@@ -19,6 +19,7 @@ package com.vhall.app.view.control.ui.progress
 		public function AbsTipsBox(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number = 0)
 		{
 			super(parent, xpos, ypos);
+			mouseChildren = mouseEnabled = false;
 		}
 
 		// 背景，九宫格
@@ -87,3 +88,5 @@ package com.vhall.app.view.control.ui.progress
 		}
 	}
 }
+
+

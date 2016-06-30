@@ -56,7 +56,7 @@ package com.vhall.app.model
 			var cues:Array = Model.docActionInfo.cuepoint;
 			//当前时间
 			var ctime:Number = MediaModel.me().player.time;
-			for(var i:int = cues.length; i >= 0; i--)
+			for(var i:int = cues.length-1; i >= 0; i--)
 			{
 				if(ctime > Number(cues[i].created_at))
 				{

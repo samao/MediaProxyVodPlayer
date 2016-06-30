@@ -32,6 +32,7 @@ package com.vhall.app.view.control
 		{
 			super(parent, xpos, ypos);
 			new ResponderMediator(this);
+			this._height = 47;
 		}
 
 		/**切换视频 音频 模式组件**/
@@ -232,7 +233,7 @@ package com.vhall.app.view.control
 			playProgressBar = new PlayProgressBar(this);
 			playProgressBar.proBar.addEventListener(DragEvent.CHANGE, onBarSeek);
 
-			var leftHB:HBox = new HBox(this, 0, 10);
+			var leftHB:HBox = new HBox(this, 0, 15);
 			leftHB.verticalAlign = "center";
 
 			btnPlay = new ToggleButton(leftHB);
@@ -250,7 +251,7 @@ package com.vhall.app.view.control
 			hb.right = 10;
 			hb.verticalAlign = "center";
 			hb.horizontalAlign = "right";
-			hb.move(0, 10);
+			hb.move(0, 15);
 
 			// 静音
 			onInitVolume();
