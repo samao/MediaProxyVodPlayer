@@ -154,17 +154,20 @@ package com.vhall.app.view.video
 		 */		
 		private function play():void
 		{
-			_preTime = 0;
+			clearTimer();
 			const server:String = MediaModel.me().netOrFileUrl;
 			const stream:String = MediaModel.me().streamName;
 			log("拉流地址：", protocol(server), server, stream);
+
+			var postion:Number = _videoPlayer.time;
+
 			if(_videoPlayer.type == null)
 			{
-				_videoPlayer.connect(protocol(server), server, stream, videoHandler, true, 0);
+				_videoPlayer.connect(protocol(server), "http:"+server, stream, videoHandler, true, postion);
 			}
 			else
 			{
-				_videoPlayer.attachType(protocol(server), server, stream);
+				_videoPlayer.attachType(protocol(server), "http:" + server, stream,true,postion);
 			}
 			_videoPlayer.visible = true;
 		}
@@ -290,7 +293,7 @@ package com.vhall.app.view.video
 
 		private function videoHandler(states:String, ... value):void
 		{
-			log("视频状态：",states);
+			//log("视频状态：",states);
 			switch(states)
 			{
 				case MediaProxyStates.CONNECT_NOTIFY:
