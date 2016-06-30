@@ -229,7 +229,7 @@ package com.vhall.app.view.control
 		/**	隐藏控制栏*/
 		protected function hideBar():void
 		{
-			AppTween.to(this, .35, {y:this.height});
+			AppTween.to(this, .35, {y:this.height - 3});
 			onHide();
 		}
 

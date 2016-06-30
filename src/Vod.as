@@ -71,7 +71,7 @@ package
 			popupLayer = new PopupLayer(this);
 			controlLayer = new ControlLayer(this);
 			LayerManager.initLayer(this);
-
+			NResponder.dispatch(AppCMD.MEDIA_SWITCH_LINE);
 			debug = new DebugLayer();
 			//注册调试信息 快捷键为ctrl+K
 			var km:KeyboardMapper = new KeyboardMapper(StageManager.stage);
