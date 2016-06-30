@@ -126,7 +126,7 @@ package com.vhall.app.view.video
 				log("加载语音状态资源失败");
 			});
 
-			play();
+			//play();
 		}
 
 		/**
@@ -159,15 +159,13 @@ package com.vhall.app.view.video
 			const stream:String = MediaModel.me().streamName;
 			log("拉流地址：", protocol(server), server, stream);
 
-			var postion:Number = _videoPlayer.time;
-
 			if(_videoPlayer.type == null)
 			{
-				_videoPlayer.connect(protocol(server), "http:"+server, stream, videoHandler, true, postion);
+				_videoPlayer.connect(protocol(server), "http:"+server, stream, videoHandler, true, _preTime);
 			}
 			else
 			{
-				_videoPlayer.attachType(protocol(server), "http:" + server, stream,true,postion);
+				_videoPlayer.attachType(protocol(server), "http:" + server, stream,true,_preTime);
 			}
 			_videoPlayer.visible = true;
 		}
@@ -322,6 +320,8 @@ package com.vhall.app.view.video
 					break;
 				case MediaProxyStates.STREAM_STOP:
 					send(AppCMD.MEDIA_STATES_FINISH);
+					clearTimer();
+					_preTime = 0;
 					_loop && play();
 					break;
 				case MediaProxyStates.STREAM_TRANSITION:
