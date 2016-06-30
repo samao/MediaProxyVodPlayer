@@ -374,20 +374,6 @@ package com.vhall.app.view.video
 			return MediaModel.me();
 		}
 
-		/**
-		 * 发送内部通讯事件
-		 * @param action
-		 * @param param
-		 */
-		private function send(action:String, param:Array = null):void
-		{
-			//log("发送消息",action,param);
-			if(param)
-				NResponder.dispatch(action, param);
-			else
-				NResponder.dispatch(action);
-		}
-
 		//----------播放器控制
 		private function pause():void
 		{
