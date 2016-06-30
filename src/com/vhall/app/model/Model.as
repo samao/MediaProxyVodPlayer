@@ -75,6 +75,11 @@ package com.vhall.app.model
 							t[varName] = data[varName];
 						}
 						break;
+					case "int":
+						if(data.hasOwnProperty(varName)){
+							t[varName] = int(data[varName]);
+						}
+						break;
 					case "Boolean":
 						if(data.hasOwnProperty(varName)){
 							t[varName] = data[varName] == "0" && data.hasOwnProperty(varName) ? false : true;
