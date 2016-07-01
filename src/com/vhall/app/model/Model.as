@@ -50,6 +50,7 @@ package com.vhall.app.model
 		{
 			this.originParmeters = data;
 			parseData(data,this);
+			DataService.updateDefLineInfo();
 			DataService.updateMediaInfo();
 		}
 
