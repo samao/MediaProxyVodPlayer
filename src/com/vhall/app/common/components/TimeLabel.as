@@ -1,16 +1,16 @@
 package com.vhall.app.common.components
 {
 	import com.vhall.framework.ui.controls.Label;
-	
+
 	import flash.display.DisplayObjectContainer;
 	import flash.events.Event;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
-	
+
 	/**
-	 * 用于显示时间的文本标签 
+	 * 用于显示时间的文本标签
 	 * @author Sol
-	 * 
+	 *
 	 */	
 	public class TimeLabel extends Label
 	{
@@ -20,20 +20,20 @@ package com.vhall.app.common.components
 		private static const ONE_MINUTE:int=1000 * 60;
 		/** 1 小时 */
 		private static const ONE_HOUR:int=1000 * 60 * 60;
-		
+
 		public function TimeLabel(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0)
 		{
 			super(parent, xpos, ypos);
 		}
-		
+
 		private var _ms:int;
 		private var _autoStart:Boolean;
 		private var _fillZero:Boolean = true;
-		
+
 		private var timer:Timer;
 		private var _delay:Number = 1000;
 		private var _addTime:Boolean = true;
-		
+
 		public function start():void
 		{
 			if(timer == null)
@@ -42,13 +42,13 @@ package com.vhall.app.common.components
 				timer.addEventListener(TimerEvent.TIMER, onTImer);
 				onTImer(null);
 			}
-			
+
 			if(!timer.running)
 			{
 				timer.start();
 			}
 		}
-		
+
 		public function stop():void
 		{
 			if(timer.running)
@@ -56,7 +56,7 @@ package com.vhall.app.common.components
 				timer.stop();
 			}
 		}
-		
+
 		protected function onTImer(e:TimerEvent):void
 		{
 			if(addTime)
@@ -67,20 +67,20 @@ package com.vhall.app.common.components
 			{
 				_ms -=delay;
 			}
-			
+
 			this.text = format(_ms);
-			
+
 			if(_ms <=0)
 			{
 				stop();
 			}
-			
+
 			if(hasEventListener(Event.CHANGE))
 			{
 				dispatchEvent(new Event(Event.CHANGE));
 			}
 		}
-		
+
 		/**
 		 * 将毫秒数格式化为 "hh:mm:ss" 字符串
 		 *
@@ -92,17 +92,17 @@ package com.vhall.app.common.components
 			{
 				return "";
 			}
-			
+
 			var h:int=ms / ONE_HOUR;
 			ms%=ONE_HOUR;
 			var m:int=ms / ONE_MINUTE;
 			ms%=ONE_MINUTE;
 			var s:int=ms / ONE_SECOND;
-			
+
 			var h_str:String=h > 9 ? String(h) : fillZero ? "0" + h : h+"";
 			var m_str:String=m > 9 ? String(m) : fillZero ? "0" + m : m+"";
 			var s_str:String=s > 9 ? String(s) : fillZero ? "0" + s : s+"";
-			
+
 			return h_str + ":" + m_str + ":" + s_str;
 		}
 
@@ -115,9 +115,10 @@ package com.vhall.app.common.components
 		public function set ms(value:int):void
 		{
 			_ms = value;
-			
+
 			this.text = format(value);
-			
+			this.width = this.textField.textWidth + 4;
+			this.height = this.textField.textHeight + 4;
 			if(autoStart)
 			{
 				start();
@@ -145,7 +146,7 @@ package com.vhall.app.common.components
 		{
 			_fillZero = value;
 		}
-		
+
 		/**	timer的延迟*/
 		public function get delay():Number
 		{
@@ -169,3 +170,4 @@ package com.vhall.app.common.components
 		}
 	}
 }
+

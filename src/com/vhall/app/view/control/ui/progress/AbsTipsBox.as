@@ -28,9 +28,6 @@ package com.vhall.app.view.control.ui.progress
 		// 容器
 		protected var container:Box;
 
-		// 三角
-		protected var tri:Image;
-
 		protected var _data:*;
 
 		public function show(p:DisplayObjectContainer):void
@@ -58,21 +55,17 @@ package com.vhall.app.view.control.ui.progress
 			super.createChildren();
 
 			container = new Box(this);
-			tri = new Image(this);
-			tri.source = "assets/ui/tipBottom.png";
 
 			bg = new Image(container);
-			bg.source = "assets/ui/tipBG.png";
+			bg.source = "ui/tbg.png";
 			bg.rect = new Rectangle(2, 2, 10, 10);
 		}
 
 		override protected function updateDisplay():void
 		{
 			super.updateDisplay();
-			this.y = -tri.height - container.height;
-			tri.y = container.height;
 			var s:Stage = StageManager.stage;
-			tri.x = s.mouseX - tri.width / 2;
+			this.y = -container.height;
 			if(s.mouseX - container.width / 2 < 0)
 			{
 				container.x = 0;

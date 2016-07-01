@@ -33,8 +33,8 @@ package com.vhall.app.view.control.ui.progress
 		{
 			// TODO Auto Generated method stub
 			super.createChildren();
-			this.graphics.beginFill(0xff, .8);
-			this.graphics.drawRect(0, 0, 5, 10);
+			this.graphics.beginFill(0xababab);
+			this.graphics.drawRoundRect(0,1,5,8,3,3);
 			this.graphics.endFill();
 		}
 

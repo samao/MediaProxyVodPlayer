@@ -1,7 +1,6 @@
 package com.vhall.app.view.control.ui.progress
 {
 	import com.vhall.app.common.components.TimeLabel;
-	import com.vhall.app.model.Model;
 	import com.vhall.app.model.info.vo.UsrDataVo;
 	import com.vhall.framework.ui.controls.Image;
 	import com.vhall.framework.ui.controls.Label;
@@ -25,14 +24,12 @@ package com.vhall.app.view.control.ui.progress
 		{
 			super.createChildren();
 
-			lblTime = new TimeLabel(container);
-			lblTime.color = 0xFF0000;
-			lblDescribe = new Label(container, 0, 24);
-			lblDescribe.color = 0xFF0000;
-			imgThumb = new Image(container, 0, 48);
-			imgThumb.setSize(140, 78);
-
-			bg.setSize(140, 126);
+			lblDescribe = new Label(container, 0, 64);
+			lblDescribe.color = 0xFFFFFF;
+			imgThumb = new Image(container,1,1);
+			imgThumb.setSize(116, 66);
+			lblTime = new TimeLabel(container,0,60);
+			lblTime.color = 0xFFFFFF;
 		}
 
 		override public function set data(value:*):void
@@ -40,7 +37,13 @@ package com.vhall.app.view.control.ui.progress
 			var info:UsrDataVo = value as UsrDataVo;
 			lblTime.ms = info.time;
 			lblDescribe.text = info.msg;
+			lblDescribe.width = lblDescribe.textField.textWidth+4;
+			lblDescribe.x = (142 - lblDescribe.width) >> 1
 			imgThumb.source = "http://cnhlsvodhls01.e.vhall.com" + info.picUrl; //"http://cnhlsvodhls01.e.vhall.com//vhallrecord/481859354/20160427154529/1553.jpg";
+			container.height = 102;
+			bg.setSize(142, 102);
 		}
 	}
 }
+
+

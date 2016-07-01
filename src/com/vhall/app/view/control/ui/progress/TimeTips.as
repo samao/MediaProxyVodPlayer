@@ -2,12 +2,8 @@ package com.vhall.app.view.control.ui.progress
 {
 	import com.vhall.app.common.components.TimeLabel;
 	import com.vhall.framework.app.manager.RenderManager;
-	import com.vhall.framework.app.manager.StageManager;
-	import com.vhall.framework.ui.container.Box;
-	import com.vhall.framework.ui.controls.Label;
 
 	import flash.display.DisplayObjectContainer;
-	import flash.display.Stage;
 
 	/**
 	 * 时间tips
@@ -27,18 +23,21 @@ package com.vhall.app.view.control.ui.progress
 		override protected function createChildren():void
 		{
 			super.createChildren();
-
 			lblTime = new TimeLabel(container);
 			lblTime.autoStart = false;
-			lblTime.color = 0xFF0000;
+			lblTime.color = 0xFFFFFF;
+			lblTime.x = 3;
+			lblTime.y = 2;
 		}
 
 		override public function set data(value:*):void
 		{
 			super.data = value;
 			lblTime.ms = value;
-			bg.width = lblTime.width;
+			bg.width = lblTime.width+6;
+			bg.height = lblTime.height+4;
 			container.width = lblTime.width;
+			container.height = 25;
 			RenderManager.getInstance().invalidate(invalidate);
 		}
 
@@ -64,3 +63,5 @@ package com.vhall.app.view.control.ui.progress
 		}
 	}
 }
+
+
