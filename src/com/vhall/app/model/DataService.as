@@ -92,6 +92,12 @@ package com.vhall.app.model
 			return false;
 		}
 
+		public static function updateDefLineInfo():void{
+			if(Model.videoInfo.selectLineVo == null && Model.videoInfo.defLinevo != null){
+				Model.Me().videoinfo.selectLineVo = Model.Me().videoinfo.defLinevo
+			}
+		}
+
 		/**
 		 *更新播放信息
 		 * <br>1.rtmp 视频 需要复制 serverUrl +fileName 需要选择线路，清晰度

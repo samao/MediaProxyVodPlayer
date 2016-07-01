@@ -343,6 +343,9 @@ package com.vhall.app.view.video
 				case MediaProxyStates.SEEK_FAILED:
 					send(AppCMD.MEDIA_STATES_SEEK_FAIL);
 					break;
+				case MediaProxyStates.PROXY_ERROR:
+					log("视频播放出错：",value[0]);
+					break;
 			}
 		}
 

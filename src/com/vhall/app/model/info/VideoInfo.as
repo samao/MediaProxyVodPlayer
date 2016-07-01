@@ -36,6 +36,8 @@ package com.vhall.app.model.info
 		 *选中线路
 		 */
 		public var selectLineVo:ServeLinevo;
+
+		public var defLinevo:ServeLinevo;
 		/**
 		 *线路数据
 		 */
@@ -105,9 +107,8 @@ package com.vhall.app.model.info
 					{
 						su = arr[i].srv_audio;
 					}
-					serverLineInfo.push(new ServeLinevo(arr[i]['default'].file, arr[i]['default'].server, su));
+					defLinevo = new ServeLinevo(arr[i]['default'].file, arr[i]['default'].server, su);
 				}
-				selectLineVo = serverLineInfo[0];
 			}
 			catch(e:Error)
 			{
