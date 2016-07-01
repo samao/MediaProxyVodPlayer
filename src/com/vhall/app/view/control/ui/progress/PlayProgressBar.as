@@ -65,8 +65,8 @@ package com.vhall.app.view.control.ui.progress
 			bar.addEventListener(DragEvent.HOVER, onBarHover);
 			bar.addEventListener(DragEvent.UP, onBarClickUp);
 			bar.addEventListener(MouseEvent.ROLL_OUT, onBarOut);
-			bar.backgroundImage.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0x00FFFF);
-			bar.finishBGImage.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0xff0000);
+			bar.backgroundImage.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0x363636);
+			bar.finishBGImage.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0xe5493e);
 			bar.quadImage.visible = false;
 			bar.bufferBGImage.visible = false;
 
