@@ -2,6 +2,7 @@ package com.vhall.app.model.info
 {
 	import com.vhall.app.model.info.vo.ServeLinevo;
 	import com.vhall.framework.log.Logger;
+
 	import flash.utils.Dictionary;
 
 	/**
@@ -88,6 +89,34 @@ package com.vhall.app.model.info
 //			serverLineInfo.push(new ServeLinevo("rtmp://ccrtmplive02.e.vhall.com/vhall", "线路2","rtmp://ccrtmplive02.e.vhall.com/vhall"));
 //			serverLineInfo.push(new ServeLinevo("rtmp://rtmplive01.e.vhall.com/vhall", "线路3","rtmp://rtmplive01.e.vhall.com/vhall"));
 //			selectLineVo = serverLineInfo[0];
+		}
+
+		private var _playItem:String;
+		public function set playItem(value:String):void
+		{
+			_playItem = value;
+			try
+			{
+				var arr:Array = JSON.parse(_playItem) as Array;
+				for(var i:int = 0; i < arr.length; i++)
+				{
+					var su:String = ""
+					if(arr[i].hasOwnProperty("srv_audio"))
+					{
+						su = arr[i].srv_audio;
+					}
+					serverLineInfo.push(new ServeLinevo(arr[i]['default'].file, arr[i]['default'].server, su));
+				}
+				selectLineVo = serverLineInfo[0];
+			}
+			catch(e:Error)
+			{
+			}
+		}
+
+		private function get playItem():String
+		{
+			return _playItem;
 		}
 
 		/**

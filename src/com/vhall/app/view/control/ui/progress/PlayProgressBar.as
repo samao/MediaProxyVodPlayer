@@ -179,7 +179,7 @@ package com.vhall.app.view.control.ui.progress
 		private function onBarHover(e:DragEvent):void
 		{
 			labelTips.show(this);
-			labelTips.data = e.percent * 1000 * 1000;
+			labelTips.data = e.percent * bar.max;
 		}
 
 		private function onBarOut(e:MouseEvent):void
