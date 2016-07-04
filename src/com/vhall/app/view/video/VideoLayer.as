@@ -86,13 +86,14 @@ package com.vhall.app.view.video
 
 			_commandMaper.mapTo(pause,AppCMD.VIDEO_CONTROL_PAUSE)
 				.mapTo(resume,AppCMD.VIDEO_CONTROL_RESUME)
-				.mapTo(seek,AppCMD.VIDEO_CONTROL_SEEK)
+				.mapTo(seekPrecent,AppCMD.VIDEO_CONTROL_SEEK)
 				.mapTo(start,AppCMD.VIDEO_CONTROL_START)
 				.mapTo(stop,AppCMD.VIDEO_CONTROL_STOP)
 				.mapTo(toggle,AppCMD.VIDEO_CONTROL_TOGGLE)
 				.mapTo(volume,AppCMD.MEDIA_SET_VOLUME)
 				.mapTo(play,AppCMD.MEDIA_SWITCH_LINE)
 				.mapTo(play,AppCMD.MEDIA_SWITCH_QUALITY)
+				.mapTo(seek,AppCMD.CUE_POINT_CLICK)
 				.mapTo(changeVodMode,AppCMD.MEDIA_CHANGEVIDEO_MODE);
 		}
 
@@ -384,6 +385,10 @@ package com.vhall.app.view.video
 		}
 
 		//----------播放器控制
+		private function seekPrecent(value:Number):void
+		{
+			seek(value * _videoPlayer.duration);
+		}
 		private function pause():void
 		{
 			_videoPlayer.pause();
@@ -395,7 +400,7 @@ package com.vhall.app.view.video
 		}
 		private function seek(value:Number):void
 		{
-			_videoPlayer.time = value*_videoPlayer.duration;
+			_videoPlayer.time = value/1000;
 		}
 		private function start():void
 		{
