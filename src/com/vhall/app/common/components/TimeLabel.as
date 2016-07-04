@@ -88,7 +88,7 @@ package com.vhall.app.common.components
 		 */
 		private function format(ms:int):String
 		{
-			if (ms <= 0)
+			if (ms < 0)
 			{
 				return "";
 			}
@@ -102,8 +102,12 @@ package com.vhall.app.common.components
 			var h_str:String=h > 9 ? String(h) : fillZero ? "0" + h : h+"";
 			var m_str:String=m > 9 ? String(m) : fillZero ? "0" + m : m+"";
 			var s_str:String=s > 9 ? String(s) : fillZero ? "0" + s : s+"";
+			if(h <= 0){
+				return  m_str + ":" + s_str;
+			}else{
+				return h_str + ":" + m_str + ":" + s_str;
+			}
 
-			return h_str + ":" + m_str + ":" + s_str;
 		}
 
 		/**	毫秒值*/

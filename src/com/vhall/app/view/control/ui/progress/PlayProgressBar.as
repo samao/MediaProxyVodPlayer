@@ -1,5 +1,6 @@
 package com.vhall.app.view.control.ui.progress
 {
+	import com.vhall.app.model.MediaModel;
 	import com.vhall.app.model.Model;
 	import com.vhall.app.model.info.vo.UsrDataVo;
 	import com.vhall.framework.ui.container.Box;
@@ -154,12 +155,12 @@ package com.vhall.app.view.control.ui.progress
 		protected function onLoop():void
 		{
 			//计算时间
-			var ct:Number = ctime + 0.02;
+			var ct:Number = MediaModel.me().player.time;
 			//如果当前播放时间没有变则返回
 			if(ct == ctime)
 				return;
 			ctime = ct;
-			var tt:Number = 30;
+			var tt:Number = MediaModel.me().player.duration;
 			bar.percent = ct / tt;
 		}
 

@@ -243,8 +243,8 @@ package com.vhall.app.view.control
 			btnPlay.addEventListener(MouseEvent.CLICK, onPlayBtnClickHandler);
 
 			time = new TrackTime(leftHB);
-			time.currentTime = 10000;
-			time.totalTime = 100000;
+			time.currentTime = 0;
+			time.totalTime = 0;
 
 			hb = new HBox(this);
 			hb.setSize(width / 2, height);

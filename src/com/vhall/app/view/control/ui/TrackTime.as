@@ -22,10 +22,12 @@ package com.vhall.app.view.control.ui
 		public function TrackTime(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number = 0)
 		{
 			super(parent, xpos, ypos);
+			this.gap = 0;
 		}
 
 		override protected function createChildren():void
 		{
+
 			super.createChildren();
 			playTime = new TimeLabel(this);
 			playTime.color = labelColor;
