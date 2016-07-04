@@ -67,7 +67,8 @@ package com.vhall.app.view.control
 				AppCMD.MEDIA_STATES_TIME_UPDATE,
 				AppCMD.MEDIA_STATES_PAUSE,
 				AppCMD.MEDIA_STATES_UNPAUSE,
-				AppCMD.MEDIA_STATES_START
+				AppCMD.MEDIA_STATES_START,
+				AppCMD.MEDIA_STATES_SEEK_COMPLETE
 				];
 			return arr;
 		}
@@ -122,6 +123,7 @@ package com.vhall.app.view.control
 					this.time.currentTime = MediaModel.me().player.time * 1000;
 //					this.playProgressBar.proBar.value = MediaModel.me().player.time * 1000;
 					break;
+				case AppCMD.MEDIA_STATES_SEEK_COMPLETE:
 				case AppCMD.MEDIA_STATES_UNPAUSE:
 					btnPlay.setSelected(true);
 					break;

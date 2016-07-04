@@ -30,6 +30,7 @@ package com.vhall.app.view.video
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
+	import flash.events.Event;
 	import flash.geom.Rectangle;
 	import flash.system.ApplicationDomain;
 	import flash.utils.clearInterval;
@@ -133,6 +134,8 @@ package com.vhall.app.view.video
 			});
 
 			//play();
+
+
 		}
 
 		/**
@@ -387,7 +390,7 @@ package com.vhall.app.view.video
 		//----------播放器控制
 		private function seekPrecent(value:Number):void
 		{
-			seek(value * _videoPlayer.duration);
+			_videoPlayer.time = (value * _videoPlayer.duration);
 		}
 		private function pause():void
 		{
