@@ -57,7 +57,7 @@ package com.vhall.app.view.control.ui.progress
 			container = new Box(this);
 
 			bg = new Image(container);
-			bg.source = "ui/tbg.png";
+			bg.source = "assets/ui/tbg.png";
 			bg.rect = new Rectangle(2, 2, 10, 10);
 		}
 
