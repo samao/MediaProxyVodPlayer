@@ -9,6 +9,7 @@ package com.vhall.app.view.control.ui.progress
 	import com.vhall.framework.ui.utils.ComponentUtils;
 
 	import flash.display.DisplayObjectContainer;
+	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.utils.clearTimeout;
 	import flash.utils.setInterval;
@@ -64,6 +65,7 @@ package com.vhall.app.view.control.ui.progress
 			// 进度条
 			bar = new HDragBar(this);
 			bar.addEventListener(DragEvent.HOVER, onBarHover);
+			bar.addEventListener(DragEvent.DRAG_START,onStart);
 			bar.addEventListener(DragEvent.UP, onBarClickUp);
 			bar.addEventListener(MouseEvent.ROLL_OUT, onBarOut);
 			bar.backgroundImage.source = ComponentUtils.genInteractiveRect(320, 10, null, 0, 0, 0x363636);
@@ -75,7 +77,12 @@ package com.vhall.app.view.control.ui.progress
 			labelTips.hide();
 			thumbTips = new ThumbTips();
 			thumbTips.hide();
-			onInitCuePoints();
+		}
+
+		protected function onStart(event:Event):void
+		{
+			// TODO Auto-generated method stub
+			stopLoop();
 		}
 
 		override protected function updateDisplay():void
@@ -88,6 +95,9 @@ package com.vhall.app.view.control.ui.progress
 
 		protected function onInitCuePoints():void
 		{
+			if(MediaModel.me().player == null  || MediaModel.me().player.duration <=0){
+				return;
+			}
 			var tmpCue:CuePointItem;
 			if(cuePoints && cuePoints.length > 0)
 			{
@@ -142,7 +152,7 @@ package com.vhall.app.view.control.ui.progress
 				for(var i:int = 0; i < len; i++)
 				{
 					tmpCue = cuePoints[i];
-					tRate = tmpCue.getTimeRate(2000);
+					tRate = tmpCue.getTimeRate(MediaModel.me().player.duration);
 					tmpCue.x = width * tRate * 0.01;
 				}
 			}
@@ -156,12 +166,13 @@ package com.vhall.app.view.control.ui.progress
 		{
 			//计算时间
 			var ct:Number = MediaModel.me().player.time;
+			var tt:Number = MediaModel.me().player.duration;
 			//如果当前播放时间没有变则返回
 			if(ct == ctime)
 				return;
 			ctime = ct;
-			var tt:Number = MediaModel.me().player.duration;
-			bar.percent = ct / tt;
+			bar.max  = tt * 1000
+			bar.value = ct*1000;
 		}
 
 		override protected function sizeChanged():void
@@ -173,7 +184,7 @@ package com.vhall.app.view.control.ui.progress
 		/**	点击*/
 		private function onBarClickUp(e:DragEvent):void
 		{
-
+			startLoop();
 		}
 
 		/**	划过*/
