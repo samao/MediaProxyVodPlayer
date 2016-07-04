@@ -12,6 +12,7 @@ package com.vhall.app.view.video
 	import com.vhall.app.common.Resource;
 	import com.vhall.app.model.DataService;
 	import com.vhall.app.model.MediaModel;
+	import com.vhall.app.model.Model;
 	import com.vhall.app.net.AppCMD;
 	import com.vhall.app.view.video.command.VideoCMD;
 	import com.vhall.app.view.video.ui.AudioModelPicComp;
@@ -23,6 +24,7 @@ package com.vhall.app.view.video
 	import com.vhall.framework.media.provider.MediaProxyStates;
 	import com.vhall.framework.media.provider.MediaProxyType;
 	import com.vhall.framework.media.video.VideoPlayer;
+	import com.vhall.framework.ui.container.Box;
 
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
@@ -57,11 +59,11 @@ package com.vhall.app.view.video
 		/**是否循环播放*/		
 		private var _loop:Boolean = true;
 
-		private var _micActivBox:Sprite;
+		private var _micActivBox:Box;
 		//广告内容
-		private var _adsBox:Sprite;
+		private var _adsBox:Box;
 		//播放结束推荐内容
-		private var _recBox:Sprite;
+		private var _recBox:Box;
 
 		//屏幕交互元件
 		private var _videoInteractive:VideoInteractive;
@@ -69,7 +71,10 @@ package com.vhall.app.view.video
 		public function VideoLayer(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0)
 		{
 			super(parent, xpos, ypos);
+
 			_layerId = "videoLayer";
+			//接入页面起始seek点(暂时都从0开始播放)
+			//_preTime = Model.Me().playerstatusinfo.seekPosition;
 		}
 
 		/**
@@ -99,7 +104,7 @@ package com.vhall.app.view.video
 			_videoPlayer.volume = info.volume;
 			addChild(_videoPlayer);
 
-			_micActivBox ||= new Sprite();
+			_micActivBox ||= new Box();
 			addChild(_micActivBox);
 
 			mouseEnabled = false;
@@ -147,6 +152,7 @@ package com.vhall.app.view.video
 				//_videoPlayer.stop();
 				_videoPlayer.visible = false;
 			}
+			play();
 		}
 
 		/**
@@ -157,7 +163,7 @@ package com.vhall.app.view.video
 			clearTimer();
 			const server:String = MediaModel.me().netOrFileUrl;
 			const stream:String = MediaModel.me().streamName;
-			log("拉流地址：", protocol(server), server, stream);
+			log("拉流地址：", protocol(server), server, stream,_preTime);
 
 			if(_videoPlayer.type == null)
 			{

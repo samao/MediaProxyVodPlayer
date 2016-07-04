@@ -24,6 +24,8 @@ package com.vhall.app.model.info
 		/***是否显示音频切换  */
 		public var streamType:int = 1;
 		public var viewVideoMode:Boolean = true;
+		/**视频起始跳转时间*/
+		private var seekPosition:Number = 0;
 	}
 }
 
