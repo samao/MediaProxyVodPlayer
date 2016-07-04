@@ -88,7 +88,7 @@ package com.vhall.app.view.video.ui
 				vocmc.scaleX = vocmc.scaleY =  1;
 			}
 			mc.x = (320 - mc.width)/2;
-			mc.y = (240 - mc.height)/2;
+			mc.y = (240 - mc.height)/2-75;
 
 			vocmc.x =  (320 - vocmc.scaleX*400)/2;
 			vocmc.y = (240 - vocmc.scaleY*400)/2;
