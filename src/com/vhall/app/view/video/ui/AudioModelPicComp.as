@@ -83,12 +83,13 @@ package com.vhall.app.view.video.ui
 				var ss:Number = Math.min(sx,sy);
 				mc.scaleX = mc.scaleY = ss*0.7;
 				vocmc.scaleX = vocmc.scaleY = ss* 0.8;
+				mc.y = (240 - mc.height)/2-75;
 			}else{
 				mc.scaleX = mc.scaleY = 1;
 				vocmc.scaleX = vocmc.scaleY =  1;
+				mc.y = (240 - mc.height)/2-25;
 			}
 			mc.x = (320 - mc.width)/2;
-			mc.y = (240 - mc.height)/2-75;
 
 			vocmc.x =  (320 - vocmc.scaleX*400)/2;
 			vocmc.y = (240 - vocmc.scaleY*400)/2;
