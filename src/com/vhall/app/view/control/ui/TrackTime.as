@@ -17,7 +17,7 @@ package com.vhall.app.view.control.ui
 
 		private var duration:TimeLabel;
 
-		private static const labelColor:uint = 0xFF0000;
+		private static const labelColor:uint = 0x6b6b6b;
 
 		public function TrackTime(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number = 0)
 		{
@@ -47,3 +47,5 @@ package com.vhall.app.view.control.ui
 		}
 	}
 }
+
+
