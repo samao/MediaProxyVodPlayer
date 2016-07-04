@@ -59,16 +59,15 @@ package com.vhall.app.view.control
 
 		public function careList():Array
 		{
-			var arr:Array = [
-				AppCMD.MEDIA_CHANGEVIDEO_MODE, 
-				AppCMD.DATA_CUEPOINT_COMP, 
-				AppCMD.CUE_POINT_CLICK, 
-				AppCMD.MEDIA_STATES_DURATION_UPDATE, 
-				AppCMD.MEDIA_STATES_TIME_UPDATE,
-				AppCMD.MEDIA_STATES_PAUSE,
-				AppCMD.MEDIA_STATES_UNPAUSE,
-				AppCMD.MEDIA_STATES_START
-				];
+			var arr:Array = [];
+			arr.push(AppCMD.MEDIA_CHANGEVIDEO_MODE);
+			arr.push(AppCMD.DATA_CUEPOINT_COMP);
+			arr.push(AppCMD.CUE_POINT_CLICK);
+			arr.push(AppCMD.MEDIA_STATES_DURATION_UPDATE);
+			arr.push(AppCMD.MEDIA_STATES_TIME_UPDATE);
+			arr.push(AppCMD.MEDIA_STATES_PAUSE);
+			arr.push(AppCMD.MEDIA_STATES_UNPAUSE);
+			arr.push(AppCMD.MEDIA_STATES_START);
 			return arr;
 		}
 

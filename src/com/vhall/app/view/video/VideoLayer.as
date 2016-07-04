@@ -56,7 +56,7 @@ package com.vhall.app.view.video
 
 		/**麦克状态ui*/
 		private var _micActivity:AudioModelPicComp;
-		/**是否循环播放*/		
+		/**是否循环播放*/
 		private var _loop:Boolean = true;
 
 		private var _micActivBox:Box;
@@ -68,7 +68,7 @@ package com.vhall.app.view.video
 		//屏幕交互元件
 		private var _videoInteractive:VideoInteractive;
 
-		public function VideoLayer(parent:DisplayObjectContainer=null, xpos:Number=0, ypos:Number=0)
+		public function VideoLayer(parent:DisplayObjectContainer = null, xpos:Number = 0, ypos:Number = 0)
 		{
 			super(parent, xpos, ypos);
 
@@ -79,22 +79,14 @@ package com.vhall.app.view.video
 
 		/**
 		 * 创建command和处理函数映射
-		 */		
+		 */
 		override protected function createCmdMapper():void
 		{
 			super.createCmdMapper();
 
-			_commandMaper.mapTo(pause,AppCMD.VIDEO_CONTROL_PAUSE)
-				.mapTo(resume,AppCMD.VIDEO_CONTROL_RESUME)
-				.mapTo(seekPrecent,AppCMD.VIDEO_CONTROL_SEEK)
-				.mapTo(start,AppCMD.VIDEO_CONTROL_START)
-				.mapTo(stop,AppCMD.VIDEO_CONTROL_STOP)
-				.mapTo(toggle,AppCMD.VIDEO_CONTROL_TOGGLE)
-				.mapTo(volume,AppCMD.MEDIA_SET_VOLUME)
-				.mapTo(play,AppCMD.MEDIA_SWITCH_LINE)
-				.mapTo(play,AppCMD.MEDIA_SWITCH_QUALITY)
-				.mapTo(seek,AppCMD.CUE_POINT_CLICK)
-				.mapTo(changeVodMode,AppCMD.MEDIA_CHANGEVIDEO_MODE);
+			_commandMaper.mapTo(pause, AppCMD.VIDEO_CONTROL_PAUSE).mapTo(resume, AppCMD.VIDEO_CONTROL_RESUME).mapTo(seekPrecent, AppCMD.VIDEO_CONTROL_SEEK).mapTo(start, AppCMD.VIDEO_CONTROL_START).mapTo(stop,
+				AppCMD.VIDEO_CONTROL_STOP).mapTo(toggle, AppCMD.VIDEO_CONTROL_TOGGLE).mapTo(volume, AppCMD.MEDIA_SET_VOLUME).mapTo(play, AppCMD.MEDIA_SWITCH_LINE).mapTo(play, AppCMD.MEDIA_SWITCH_QUALITY).mapTo(seek,
+				AppCMD.CUE_POINT_CLICK).mapTo(changeVodMode, AppCMD.MEDIA_CHANGEVIDEO_MODE);
 		}
 
 		override protected function createChildren():void
@@ -112,11 +104,11 @@ package com.vhall.app.view.video
 
 			_videoInteractive = new VideoInteractive(this);
 
-			NResponder.addNative(_videoInteractive,VideoCMD.DOUBLE_CLICK,function():void
+			NResponder.addNative(_videoInteractive, VideoCMD.DOUBLE_CLICK, function():void
 			{
 				StageManager.toggleFullscreen();
 			});
-			NResponder.addNative(_videoInteractive,VideoCMD.SINGLE_CLICK,function():void
+			NResponder.addNative(_videoInteractive, VideoCMD.SINGLE_CLICK, function():void
 			{
 				_videoPlayer.toggle();
 			});
@@ -137,7 +129,7 @@ package com.vhall.app.view.video
 
 		/**
 		 * 改变当前播放模式，mediamodel.videomode = false为视频模式，true为语音模式
-		 */		
+		 */
 		private function changeVodMode():void
 		{
 			log("videoMode:", info.videoMode);
@@ -158,21 +150,21 @@ package com.vhall.app.view.video
 
 		/**
 		 * 播放视频
-		 */		
+		 */
 		private function play():void
 		{
 			clearTimer();
 			const server:String = MediaModel.me().netOrFileUrl;
 			const stream:String = MediaModel.me().streamName;
-			log("拉流地址：", protocol(server), server, stream,_preTime);
+			log("拉流地址：", protocol(server), server, stream, _preTime);
 
 			if(_videoPlayer.type == null)
 			{
-				_videoPlayer.connect(protocol(server), "http:"+server, stream, videoHandler, true, _preTime);
+				_videoPlayer.connect(protocol(server), "http:" + server, stream, videoHandler, true, _preTime);
 			}
 			else
 			{
-				_videoPlayer.attachType(protocol(server), "http:" + server, stream,true,_preTime);
+				_videoPlayer.attachType(protocol(server), "http:" + server, stream, true, _preTime);
 			}
 			_videoPlayer.visible = true;
 		}
@@ -205,7 +197,7 @@ package com.vhall.app.view.video
 		override public function setSize(w:Number, h:Number):void
 		{
 			super.setSize(w, h);
-			_videoInteractive.setSize(w,h);
+			_videoInteractive.setSize(w, h);
 			if(stage)
 			{
 				var rect:Rectangle = null;
@@ -351,7 +343,7 @@ package com.vhall.app.view.video
 					send(AppCMD.MEDIA_STATES_SEEK_FAIL);
 					break;
 				case MediaProxyStates.PROXY_ERROR:
-					log("视频播放出错：",value[0]);
+					log("视频播放出错：", value[0]);
 					break;
 			}
 		}
@@ -389,6 +381,7 @@ package com.vhall.app.view.video
 		{
 			seek(value * _videoPlayer.duration);
 		}
+
 		private function pause():void
 		{
 			_videoPlayer.pause();
@@ -398,22 +391,27 @@ package com.vhall.app.view.video
 		{
 			_videoPlayer.resume();
 		}
+
 		private function seek(value:Number):void
 		{
-			_videoPlayer.time = value/1000;
+			_videoPlayer.time = value / 1000;
 		}
+
 		private function start():void
 		{
 			_videoPlayer.start();
 		}
+
 		private function stop():void
 		{
 			_videoPlayer.stop();
 		}
+
 		private function toggle():void
 		{
 			_videoPlayer.toggle();
 		}
+
 		private function volume(value:Number):void
 		{
 			_videoPlayer.volume = value;
