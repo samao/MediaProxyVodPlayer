@@ -23,13 +23,17 @@ package com.vhall.app.view.video
 	import com.vhall.framework.load.ResourceLoader;
 	import com.vhall.framework.media.provider.MediaProxyStates;
 	import com.vhall.framework.media.provider.MediaProxyType;
+	import com.vhall.framework.media.provider.ProxyMode;
+	import com.vhall.framework.media.provider.ProxySetting;
 	import com.vhall.framework.media.video.VideoPlayer;
 	import com.vhall.framework.ui.container.Box;
+	import com.vhall.framework.utils.StringUtil;
 
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
+	import flash.events.Event;
 	import flash.geom.Rectangle;
 	import flash.system.ApplicationDomain;
 	import flash.utils.clearInterval;
@@ -125,6 +129,8 @@ package com.vhall.app.view.video
 			});
 
 			//play();
+
+
 		}
 
 		/**
@@ -154,17 +160,23 @@ package com.vhall.app.view.video
 		private function play():void
 		{
 			clearTimer();
-			const server:String = MediaModel.me().netOrFileUrl;
-			const stream:String = MediaModel.me().streamName;
+			var server:String = MediaModel.me().netOrFileUrl;
+			var stream:String = MediaModel.me().streamName;
+
+			if(protocol(server) == MediaProxyType.HLS && !StringUtil.beginWith("http:", server))
+			{
+				server = "http:" + server;
+			}
+
 			log("拉流地址：", protocol(server), server, stream, _preTime);
 
 			if(_videoPlayer.type == null)
 			{
-				_videoPlayer.connect(protocol(server), "http:" + server, stream, videoHandler, true, _preTime);
+				_videoPlayer.connect(protocol(server), server, stream, videoHandler, true, _preTime);
 			}
 			else
 			{
-				_videoPlayer.attachType(protocol(server), "http:" + server, stream, true, _preTime);
+				_videoPlayer.attachType(protocol(server), server, stream, true, _preTime);
 			}
 			_videoPlayer.visible = true;
 		}
@@ -175,7 +187,7 @@ package com.vhall.app.view.video
 		 */
 		private function get isLive():Boolean
 		{
-			return [MediaProxyType.RTMP, MediaProxyType.PUBLISH].indexOf(type) != -1;
+			return [MediaProxyType.RTMP, MediaProxyType.PUBLISH].indexOf(type) != -1 && _videoPlayer.duration == 0;
 		}
 
 		/**
@@ -379,7 +391,7 @@ package com.vhall.app.view.video
 		//----------播放器控制
 		private function seekPrecent(value:Number):void
 		{
-			seek(value * _videoPlayer.duration);
+			_videoPlayer.time = (value * _videoPlayer.duration);
 		}
 
 		private function pause():void

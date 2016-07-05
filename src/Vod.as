@@ -37,6 +37,11 @@ package
 			new MessageController();
 			super(parent, xpos, ypos);
 			new ResponderMediator(this);
+
+			addEventListener(Event.ADDED_TO_STAGE,function():void
+			{
+				NResponder.dispatch(AppCMD.MEDIA_SWITCH_LINE);
+			});
 		}
 
 		// 控制层，音量，线路，全屏那些
@@ -71,7 +76,7 @@ package
 			popupLayer = new PopupLayer(this);
 			controlLayer = new ControlLayer(this);
 			LayerManager.initLayer(this);
-			NResponder.dispatch(AppCMD.MEDIA_SWITCH_LINE);
+			//NResponder.dispatch(AppCMD.MEDIA_SWITCH_LINE);
 			debug = new DebugLayer();
 			//注册调试信息 快捷键为ctrl+K
 			var km:KeyboardMapper = new KeyboardMapper(StageManager.stage);
