@@ -12,7 +12,6 @@ package com.vhall.app.view.video
 	import com.vhall.app.common.Resource;
 	import com.vhall.app.model.DataService;
 	import com.vhall.app.model.MediaModel;
-	import com.vhall.app.model.Model;
 	import com.vhall.app.net.AppCMD;
 	import com.vhall.app.view.video.command.VideoCMD;
 	import com.vhall.app.view.video.ui.AudioModelPicComp;
@@ -23,17 +22,13 @@ package com.vhall.app.view.video
 	import com.vhall.framework.load.ResourceLoader;
 	import com.vhall.framework.media.provider.MediaProxyStates;
 	import com.vhall.framework.media.provider.MediaProxyType;
-	import com.vhall.framework.media.provider.ProxyMode;
-	import com.vhall.framework.media.provider.ProxySetting;
 	import com.vhall.framework.media.video.VideoPlayer;
 	import com.vhall.framework.ui.container.Box;
 	import com.vhall.framework.utils.StringUtil;
 
 	import flash.display.DisplayObjectContainer;
 	import flash.display.MovieClip;
-	import flash.display.Sprite;
 	import flash.display.StageDisplayState;
-	import flash.events.Event;
 	import flash.geom.Rectangle;
 	import flash.system.ApplicationDomain;
 	import flash.utils.clearInterval;
