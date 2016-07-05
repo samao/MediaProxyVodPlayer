@@ -1,6 +1,8 @@
 package com.vhall.app.view.control.ui.progress
 {
+	import com.hurlant.util.Base64;
 	import com.vhall.app.common.components.TimeLabel;
+	import com.vhall.app.model.Model;
 	import com.vhall.app.model.info.vo.UsrDataVo;
 	import com.vhall.framework.ui.controls.Image;
 	import com.vhall.framework.ui.controls.Label;
@@ -24,11 +26,11 @@ package com.vhall.app.view.control.ui.progress
 		{
 			super.createChildren();
 
-			lblDescribe = new Label(container, 0, 64);
+			lblDescribe = new Label(container, 0, 78);
 			lblDescribe.color = 0xFFFFFF;
-			imgThumb = new Image(container,1,1);
+			imgThumb = new Image(container, 1, 1);
 			imgThumb.setSize(116, 66);
-			lblTime = new TimeLabel(container,0,60);
+			lblTime = new TimeLabel(container, 0, 60);
 			lblTime.color = 0xFFFFFF;
 		}
 
@@ -36,12 +38,17 @@ package com.vhall.app.view.control.ui.progress
 		{
 			var info:UsrDataVo = value as UsrDataVo;
 			lblTime.ms = info.time;
-			lblDescribe.text = info.msg;
-			lblDescribe.width = lblDescribe.textField.textWidth+4;
-			lblDescribe.x = (142 - lblDescribe.width) >> 1
-			imgThumb.source = "http://cnhlsvodhls01.e.vhall.com" + info.picUrl; //"http://cnhlsvodhls01.e.vhall.com//vhallrecord/481859354/20160427154529/1553.jpg";
+			lblDescribe.text = Base64.decode(info.msg).replace('\r', '');
+			lblDescribe.width = lblDescribe.textField.textWidth + 4;
+			imgThumb.source = "http:" + Model.videoInfo.media_srv + info.picUrl; //"http://cnhlsvodhls01.e.vhall.com//vhallrecord/481859354/20160427154529/1553.jpg";
 			container.height = 102;
 			bg.setSize(142, 102);
+		}
+
+		override protected function updateDisplay():void
+		{
+			super.updateDisplay();
+			lblDescribe.x = (142 - lblDescribe.width) >> 1;
 		}
 	}
 }

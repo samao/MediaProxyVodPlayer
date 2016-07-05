@@ -67,8 +67,6 @@ package com.vhall.app.view.control
 			arr.push(AppCMD.MEDIA_STATES_TIME_UPDATE);
 			arr.push(AppCMD.MEDIA_STATES_PAUSE);
 			arr.push(AppCMD.MEDIA_STATES_UNPAUSE);
-			arr.push(AppCMD.MEDIA_STATES_START);
-			arr.push(AppCMD.MEDIA_STATES_SEEK_COMPLETE);
 			return arr;
 		}
 
@@ -116,22 +114,21 @@ package com.vhall.app.view.control
 					break;
 				case AppCMD.MEDIA_STATES_DURATION_UPDATE:
 					this.time.totalTime = args[0] * 1000;
-					this.playProgressBar.proBar.max = args[0] * 1000;
+					if(playProgressBar){
+						this.playProgressBar.proBar.max = args[0] * 1000;
+						playProgressBar.startLoop();
+						playProgressBar.showCuePoint();
+					}
 					break;
 				case AppCMD.MEDIA_STATES_TIME_UPDATE:
 					this.time.currentTime = MediaModel.me().player.time * 1000;
 //					this.playProgressBar.proBar.value = MediaModel.me().player.time * 1000;
 					break;
-				case AppCMD.MEDIA_STATES_SEEK_COMPLETE:
 				case AppCMD.MEDIA_STATES_UNPAUSE:
 					btnPlay.setSelected(true);
 					break;
 				case AppCMD.MEDIA_STATES_PAUSE:
 					btnPlay.setSelected(false);
-					break;
-				case AppCMD.MEDIA_STATES_START:
-					playProgressBar.startLoop();
-					playProgressBar.showCuePoint();
 					break;
 			}
 		}

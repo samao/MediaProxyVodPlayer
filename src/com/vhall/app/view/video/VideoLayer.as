@@ -158,9 +158,9 @@ package com.vhall.app.view.video
 			var server:String = MediaModel.me().netOrFileUrl;
 			var stream:String = MediaModel.me().streamName;
 
-			if(protocol(server) == MediaProxyType.HLS && !StringUtil.beginWith("http:",server))
+			if(protocol(server) == MediaProxyType.HLS && !StringUtil.beginWith("http:", server))
 			{
-				server = "http:"+server;
+				server = "http:" + server;
 			}
 
 			log("拉流地址：", protocol(server), server, stream, _preTime);

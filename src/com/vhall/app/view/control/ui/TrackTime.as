@@ -1,6 +1,7 @@
 package com.vhall.app.view.control.ui
 {
 	import com.vhall.app.common.components.TimeLabel;
+	import com.vhall.framework.app.manager.RenderManager;
 	import com.vhall.framework.ui.container.HBox;
 	import com.vhall.framework.ui.controls.Label;
 
@@ -41,6 +42,7 @@ package com.vhall.app.view.control.ui
 		public function set currentTime(value:Number):void
 		{
 			playTime.ms = value;
+			RenderManager.getInstance().invalidate(updateDisplay);
 		}
 
 		public function set totalTime(value:Number):void
