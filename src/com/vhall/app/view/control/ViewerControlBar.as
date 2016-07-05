@@ -67,6 +67,7 @@ package com.vhall.app.view.control
 			arr.push(AppCMD.MEDIA_STATES_TIME_UPDATE);
 			arr.push(AppCMD.MEDIA_STATES_PAUSE);
 			arr.push(AppCMD.MEDIA_STATES_UNPAUSE);
+			arr.push(AppCMD.MEDIA_STATES_SEEK_COMPLETE);
 			return arr;
 		}
 
@@ -130,6 +131,10 @@ package com.vhall.app.view.control
 				case AppCMD.MEDIA_STATES_PAUSE:
 					btnPlay.setSelected(false);
 					break;
+				case AppCMD.MEDIA_STATES_SEEK_COMPLETE:
+					if(playProgressBar){
+						playProgressBar.startLoop();
+					}
 			}
 		}
 

@@ -190,7 +190,6 @@ package com.vhall.app.view.control.ui.progress
 		/**	点击*/
 		private function onBarClickUp(e:DragEvent):void
 		{
-			startLoop();
 			cueContainer.mouseChildren = cueContainer.mouseEnabled = true;
 		}
 
