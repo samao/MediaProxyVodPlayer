@@ -79,10 +79,12 @@ package com.vhall.app.model.info
 					if(arr[i].hasOwnProperty("srv_audio"))
 					{
 						su = arr[i].srv_audio;
+
 					}
 					serverLineInfo.push(new ServeLinevo(arr[i].srv, arr[i].name, su));
 				}
 				selectLineVo = serverLineInfo[0];
+				audioSrv = selectLineVo.serverAudio;
 			}
 			catch(e:Error)
 			{
