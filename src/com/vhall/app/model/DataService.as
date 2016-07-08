@@ -2,9 +2,12 @@ package com.vhall.app.model
 {
 	import com.vhall.app.model.info.PlayMode;
 	import com.vhall.app.model.info.vo.ServeLinevo;
+	import com.vhall.app.net.AppCMD;
 	import com.vhall.framework.log.Logger;
 
 	import flash.utils.Dictionary;
+
+	import appkit.responders.NResponder;
 
 
 	/**
@@ -85,6 +88,8 @@ package com.vhall.app.model
 					tmpLinevo = lines[i];
 					if(fail[tmpLinevo.serverUrl] == null && tmpLinevo.serverUrl != currentUrl){
 						Model.videoInfo.selectLineVo = tmpLinevo;
+						Logger.getLogger("DataServer").info("UI_AUTO_CHANGE_SERVERLINE");
+						NResponder.dispatch(AppCMD.UI_AUTO_CHANGE_SERVERLINE);
 						return true;
 					}
 				}

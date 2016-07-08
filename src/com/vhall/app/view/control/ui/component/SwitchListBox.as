@@ -1,5 +1,6 @@
 package  com.vhall.app.view.control.ui.component
 {
+	import com.vhall.app.model.info.vo.ServeLinevo;
 	import com.vhall.framework.ui.container.Box;
 	import com.vhall.framework.ui.event.ListEvent;
 
@@ -156,10 +157,31 @@ package  com.vhall.app.view.control.ui.component
 			return list.selectItem.data;
 		}
 
+
 		public function setSelectData(data:Object):void{
 			list.updateSelect(data);
 		}
 
+		/**
+		 *设置选中
+		 * @param data
+		 *
+		 */		
+		public function changeSelect(data:ServeLinevo):void{
+			var len:int = datas.length;
+			var findData:Object;
+			for (var i:int = 0; i < len; i++) 
+			{
+				findData = datas[i];
+				if(findData.label == data.sName)
+				{
+					break;
+				}
+			}
+			if(findData){
+				list.selectData = findData;
+			}
+		}
 
 		/**
 		 *设置显示itemSkin

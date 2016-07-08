@@ -45,7 +45,7 @@ package com.vhall.app.view.control
 
 		protected var playProgressBar:PlayProgressBar
 		/**切换线路组件**/
-		protected var serverLinke:SwitchListBox;
+		protected var serverLine:SwitchListBox;
 		/**静音按钮*/
 		private var _muteBut:ToggleButton;
 
@@ -165,6 +165,15 @@ package com.vhall.app.view.control
 			if(!updateStatus() && isChange)
 			{
 				hb.validateNow()
+			}
+		}
+		/**
+		 *自动切线
+		 *
+		 */		
+		public function onAutoChangeServeLine():void{
+			if(serverLine){
+				serverLine.changeSelect(Model.videoInfo.selectLineVo);
 			}
 		}
 
@@ -325,9 +334,9 @@ package com.vhall.app.view.control
 		{
 			// TODO Auto Generated method stub
 			super.onHide();
-			if(serverLinke)
+			if(serverLine)
 			{
-				serverLinke.hideList();
+				serverLine.hideList();
 			}
 		}
 
@@ -344,7 +353,7 @@ package com.vhall.app.view.control
 			var showData:Array = []
 			if(sdata && sdata.length > 1)
 			{
-				serverLinke = new SwitchListBox(hb);
+				serverLine = new SwitchListBox(hb);
 				var tmpdta:ServeLinevo;
 				var data:Object;
 				for(var i:int = 0; i < sdata.length; i++)
@@ -355,12 +364,12 @@ package com.vhall.app.view.control
 					data.value = tmpdta.sName;
 					showData[i] = data;
 				}
-				serverLinke.initList(showData, 110);
-				serverLinke.setShowItemSize(74, 22);
-				serverLinke.showlabel = "切换线路";
+				serverLine.initList(showData, 110);
+				serverLine.setShowItemSize(74, 22);
+				serverLine.showlabel = "切换线路";
 
-				serverLinke.addEventListener(Event.CHANGE, onServerLineChange);
-				serverLinke.userData = 30;
+				serverLine.addEventListener(Event.CHANGE, onServerLineChange);
+				serverLine.userData = 30;
 			}
 		}
 
@@ -412,8 +421,8 @@ package com.vhall.app.view.control
 		protected function onServerLineChange(event:Event):void
 		{
 			// TODO Auto-generated method stub
-			Logger.getLogger("ViewerControlBar").info("onServerLineChange :", serverLinke.getSelectData().value);
-			var selectSl:String = serverLinke.getSelectData().value;
+			Logger.getLogger("ViewerControlBar").info("onServerLineChange :", serverLine.getSelectData().value);
+			var selectSl:String = serverLine.getSelectData().value;
 			if(DataService.onSelectServerLine(selectSl))
 			{
 				DataService.updateMediaInfo();

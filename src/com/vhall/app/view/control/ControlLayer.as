@@ -1,6 +1,7 @@
 package com.vhall.app.view.control
 {
 	import com.vhall.app.common.Layer;
+	import com.vhall.app.net.AppCMD;
 	import com.vhall.framework.app.mvc.IResponder;
 
 	import flash.display.DisplayObjectContainer;
@@ -37,13 +38,18 @@ package com.vhall.app.view.control
 
 		public function careList():Array
 		{
-			return [];
+			return [AppCMD.UI_AUTO_CHANGE_SERVERLINE];
 		}
 
 		public function handleCare(msg:String, ... args):void
 		{
 			switch(msg)
 			{
+				case 	AppCMD.UI_AUTO_CHANGE_SERVERLINE:
+					if(_viewBar){
+						(_viewBar as ViewerControlBar).onAutoChangeServeLine();
+					}
+					break;
 			}
 		}
 	}
