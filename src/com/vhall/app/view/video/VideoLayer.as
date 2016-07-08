@@ -9,6 +9,8 @@
 
 package com.vhall.app.view.video
 {
+	import appkit.responders.NResponder;
+
 	import com.vhall.app.common.Resource;
 	import com.vhall.app.model.DataService;
 	import com.vhall.app.model.MediaModel;
@@ -34,8 +36,6 @@ package com.vhall.app.view.video
 	import flash.utils.clearInterval;
 	import flash.utils.clearTimeout;
 	import flash.utils.setInterval;
-
-	import appkit.responders.NResponder;
 
 	public class VideoLayer extends FastLayer implements IResponder
 	{

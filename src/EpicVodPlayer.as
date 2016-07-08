@@ -1,6 +1,7 @@
 package
 {
 	import com.vhall.app.common.Resource;
+	import com.vhall.app.common.Version;
 	import com.vhall.app.load.ResourceLoadingView;
 	import com.vhall.app.model.Model;
 	import com.vhall.framework.app.App;
@@ -39,8 +40,15 @@ package
 			Security.allowDomain("*");
 			// load live.swf
 			var arr:Array = [];
-			arr.push({type:2,id:"ui", url:Resource.getResource("ui")});
-			arr.push({type:2,id:"vod", url:Resource.getCode("Vod")});
+			arr.push({type:2, id:"ui", url:Resource.getResource("ui")});
+
+			var codepath:String = "Vod";
+			if(CONFIG::RELEASE)
+			{
+				codepath += Version.ver;
+			}
+			arr.push({type:2, id:"vod", url:Resource.getCode(codepath)});
+
 			ResourceLoadingView.show(arr, itemComplete, progress, allComplete);
 		}
 
