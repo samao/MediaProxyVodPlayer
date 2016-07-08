@@ -64,10 +64,10 @@ package com.vhall.app.model
 			return false;
 		}
 		/**
-		 *连接线路失败后，重新切换到其他线路（数据切换）（失败过的线路会记录）
-		 * @return 返回是否查找线
+		 *连接线路失败后，重新切换到其他线路（失败过的线路会记录 会通知ui更新）
+		 * @return 返回是否找到可用线路
 		 */		
-		public static function connFailed2ChangeServerLine():Boolean{
+		public static function connFailed2ChangeServerLine(uiChange:Boolean = true):Boolean{
 			var fail:Dictionary;
 			if(Model.videoInfo.failLines == null){
 				Model.videoInfo.failLines = new Dictionary();
@@ -88,8 +88,10 @@ package com.vhall.app.model
 					tmpLinevo = lines[i];
 					if(fail[tmpLinevo.serverUrl] == null && tmpLinevo.serverUrl != currentUrl){
 						Model.videoInfo.selectLineVo = tmpLinevo;
-						Logger.getLogger("DataServer").info("UI_AUTO_CHANGE_SERVERLINE");
-						NResponder.dispatch(AppCMD.UI_AUTO_CHANGE_SERVERLINE);
+						if(uiChange){
+							Logger.getLogger("DataServer").info("UI_AUTO_CHANGE_SERVERLINE");
+							NResponder.dispatch(AppCMD.UI_AUTO_CHANGE_SERVERLINE);
+						}
 						return true;
 					}
 				}

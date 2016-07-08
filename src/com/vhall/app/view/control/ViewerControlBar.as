@@ -426,8 +426,8 @@ package com.vhall.app.view.control
 			if(DataService.onSelectServerLine(selectSl))
 			{
 				DataService.updateMediaInfo();
-				NResponder.dispatch(AppCMD.MEDIA_SWITCH_LINE);
 				NResponder.dispatch(AppCMD.UI_SHOW_LOADING);
+				NResponder.dispatch(AppCMD.MEDIA_SWITCH_LINE);
 			}
 		}
 
@@ -447,8 +447,8 @@ package com.vhall.app.view.control
 			DataService.onVideoModelChange(changeVideoMode.isVideoMode);
 			DataService.updateMediaInfo();
 			MediaModel.me().videoMode = !Model.playerStatusInfo.viewVideoMode;
-			NResponder.dispatch(AppCMD.MEDIA_CHANGEVIDEO_MODE);
 			NResponder.dispatch(AppCMD.UI_SHOW_LOADING);
+			NResponder.dispatch(AppCMD.MEDIA_CHANGEVIDEO_MODE);
 		}
 
 		override protected function sizeChanged():void

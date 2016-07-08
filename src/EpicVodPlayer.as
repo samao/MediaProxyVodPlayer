@@ -14,7 +14,7 @@ package
 	import flash.system.ApplicationDomain;
 	import flash.system.Security;
 
-	[SWF(width = "960", height = "640", backgroundColor = "0xC0C0C0")]
+	[SWF(width = "960", height = "640", backgroundColor = "0x000000")]
 	public class EpicVodPlayer extends App
 	{
 		public function EpicVodPlayer()
