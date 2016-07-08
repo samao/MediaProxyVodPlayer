@@ -81,23 +81,17 @@ package com.vhall.app.view.video.ui
 				var sx:Number = swidth/640;
 				var sy:Number = shight/480;
 				var ss:Number = Math.min(sx,sy);
-				mc.scaleX = mc.scaleY = ss*0.7;
-				vocmc.scaleX = vocmc.scaleY = ss* 0.8;
-				mc.y = (240 - mc.height)/2-75;
+				mc.scaleX = mc.scaleY = ss;
+				vocmc.scaleX = vocmc.scaleY = ss;
 			}else{
 				mc.scaleX = mc.scaleY = 1;
 				vocmc.scaleX = vocmc.scaleY =  1;
-				mc.y = (240 - mc.height)/2-25;
 			}
-			mc.x = (320 - mc.width)/2;
-
-			vocmc.x =  (320 - vocmc.scaleX*400)/2;
-			vocmc.y = (240 - vocmc.scaleY*400)/2;
 			try{
-				_skin["txt"].y = mc.y + mc.height+5;
+				_skin["txt"].y = mc.y + mc.height/2+5;
 			}catch(e:Error){};
-			_skin.x = swidth - _skin.width >> 1;
-			_skin.y = shight - _skin.height >> 1;
+			_skin.x = (swidth) >> 1;
+			_skin.y = (shight) >> 1;
 		}
 
 		/**
