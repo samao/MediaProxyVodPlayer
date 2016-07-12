@@ -26,6 +26,11 @@ package com.vhall.app.model.info
 		public var viewVideoMode:Boolean = true;
 		/**视频起始跳转时间*/
 		private var seekPosition:Number = 0;
+
+		/**
+		 *是否是语音模式（语音文档）
+		 */		
+		public var videoMode:int = 0;
 	}
 }
 

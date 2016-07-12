@@ -1,7 +1,6 @@
 package
 {
 	import com.vhall.app.common.Resource;
-	import com.vhall.app.common.Version;
 	import com.vhall.app.load.ResourceLoadingView;
 	import com.vhall.app.model.Model;
 	import com.vhall.framework.app.App;
@@ -14,6 +13,11 @@ package
 	import flash.geom.Matrix;
 	import flash.system.ApplicationDomain;
 	import flash.system.Security;
+
+	CONFIG::RELEASE
+	{
+		import com.vhall.app.common.Version;
+	}
 
 	[SWF(width = "960", height = "640", backgroundColor = "0x000000")]
 	public class EpicVodPlayer extends App
@@ -43,10 +47,12 @@ package
 			arr.push({type:2, id:"ui", url:Resource.getResource("ui")});
 
 			var codepath:String = "Vod";
-			if(CONFIG::RELEASE)
+
+			CONFIG::RELEASE
 			{
 				codepath += Version.ver;
 			}
+
 			arr.push({type:2, id:"vod", url:Resource.getCode(codepath)});
 
 			ResourceLoadingView.show(arr, itemComplete, progress, allComplete);
