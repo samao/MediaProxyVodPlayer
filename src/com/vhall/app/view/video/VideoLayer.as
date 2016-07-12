@@ -9,11 +9,10 @@
 
 package com.vhall.app.view.video
 {
-	import appkit.responders.NResponder;
-
 	import com.vhall.app.common.Resource;
 	import com.vhall.app.model.DataService;
 	import com.vhall.app.model.MediaModel;
+	import com.vhall.app.model.Model;
 	import com.vhall.app.net.AppCMD;
 	import com.vhall.app.view.video.command.VideoCMD;
 	import com.vhall.app.view.video.ui.AudioModelPicComp;
@@ -36,6 +35,8 @@ package com.vhall.app.view.video
 	import flash.utils.clearInterval;
 	import flash.utils.clearTimeout;
 	import flash.utils.setInterval;
+
+	import appkit.responders.NResponder;
 
 	public class VideoLayer extends FastLayer implements IResponder
 	{
@@ -85,7 +86,7 @@ package com.vhall.app.view.video
 
 			_commandMaper.mapTo(pause, AppCMD.VIDEO_CONTROL_PAUSE).mapTo(resume, AppCMD.VIDEO_CONTROL_RESUME).mapTo(seekPrecent, AppCMD.VIDEO_CONTROL_SEEK).mapTo(start, AppCMD.VIDEO_CONTROL_START).mapTo(stop,
 				AppCMD.VIDEO_CONTROL_STOP).mapTo(toggle, AppCMD.VIDEO_CONTROL_TOGGLE).mapTo(volume, AppCMD.MEDIA_SET_VOLUME).mapTo(play, AppCMD.MEDIA_SWITCH_LINE).mapTo(play, AppCMD.MEDIA_SWITCH_QUALITY).mapTo(seek,
-				AppCMD.CUE_POINT_CLICK).mapTo(changeVodMode, AppCMD.MEDIA_CHANGEVIDEO_MODE);
+				AppCMD.CUE_POINT_CLICK).mapTo(play, AppCMD.MEDIA_CHANGEVIDEO_MODE);
 		}
 
 		override protected function createChildren():void
@@ -118,6 +119,7 @@ package com.vhall.app.view.video
 			{
 				_micActivity = new AudioModelPicComp();
 				_micActivity.skin = content as MovieClip;
+				changeVodMode();
 			}, null, function():void
 			{
 				log("加载语音状态资源失败");
@@ -133,7 +135,7 @@ package com.vhall.app.view.video
 		 */
 		private function changeVodMode():void
 		{
-			log("videoMode:", info.videoMode);
+			trace("videoMode:", info.videoMode,Model.playerStatusInfo.videoMode);
 			if(!info.videoMode)
 			{
 				_micActivity && _micActivBox.contains(_micActivity) && _micActivBox.removeChild(_micActivity);
@@ -146,7 +148,6 @@ package com.vhall.app.view.video
 				//_videoPlayer.stop();
 				_videoPlayer.visible = false;
 			}
-			play();
 		}
 
 		/**
@@ -174,6 +175,7 @@ package com.vhall.app.view.video
 				_videoPlayer.attachType(protocol(server), server, stream, true, _preTime);
 			}
 			_videoPlayer.visible = true;
+			changeVodMode();
 		}
 
 		/**

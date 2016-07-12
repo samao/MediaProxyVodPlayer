@@ -379,10 +379,7 @@ package com.vhall.app.view.control
 		 */
 		protected function onInitVideoModeBtn():void
 		{
-			if(Model.playerStatusInfo.videoMode == 1){
-				return;
-			}
-			if(!Model.playerStatusInfo.streamType)
+			if(!Model.playerStatusInfo.streamType||Model.playerStatusInfo.videoMode == 1)
 				return;
 			changeVideoMode = new VideoAudioChangeBtn(hb)
 			changeVideoMode.setSize(74, 22);

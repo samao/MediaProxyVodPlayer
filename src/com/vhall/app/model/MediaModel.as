@@ -41,7 +41,7 @@ package com.vhall.app.model
 		public var player:IVideoPlayer;
 
 		/**默认为true视频模式，false为语音*/		
-		public var videoMode:Boolean = false;
+		public var _videoMode:Boolean = false;
 
 		public var defaultDefination:String = "high";
 
@@ -60,12 +60,26 @@ package com.vhall.app.model
 		{
 			var obj:Object = SOManager.getInstance().getValue("setting");
 			this._soCamera = obj.cameraName == "禁用视频设备/无设备"?null:obj.cameraName;
-			videoMode = _soCamera!=null;
+			_videoMode = _soCamera!=null;
 			this._soCamWidth = obj.width||854;
 			this._soCamHeight = obj.height||480;
 			this._soMicrophone = obj.micName;
 			this.volume = obj.micVolume||.68;
 //			this.videoMode = Boolean(Model.Me().meetinginfo.videoMode);
+		}
+
+		/**默认为true视频模式，false为语音*/
+		public function get videoMode():Boolean
+		{
+			return Model.Me().playerstatusinfo.videoMode == 1||_videoMode;
+		}
+
+		/**
+		 * @private
+		 */
+		public function set videoMode(value:Boolean):void
+		{
+			_videoMode = value;
 		}
 
 		public static function me():MediaModel
