@@ -58,7 +58,7 @@ package com.vhall.app.view.video.ui
 
 		private function runTime():void{
 			if(isTimeRun){
-				setTimeout(updateVoic,200);
+				setTimeout(updateVoic,350);
 				isTimeRun = true;
 			}
 		}
@@ -101,7 +101,8 @@ package com.vhall.app.view.video.ui
 			runTime();
 			if(!_skin) return;
 			var vocmc:MovieClip = _skin.getChildByName("voc") as MovieClip;
-			var micVolume:int = activity;
+//			var micVolume:int = activity;
+			var micVolume:int = Math.random() * 90-10;
 			if(micVolume <=0){
 				vocmc.gotoAndStop(1);
 			}else if(micVolume > 0 && micVolume <= 30){

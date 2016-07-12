@@ -379,6 +379,9 @@ package com.vhall.app.view.control
 		 */
 		protected function onInitVideoModeBtn():void
 		{
+			if(Model.playerStatusInfo.videoMode == 1){
+				return;
+			}
 			if(!Model.playerStatusInfo.streamType)
 				return;
 			changeVideoMode = new VideoAudioChangeBtn(hb)

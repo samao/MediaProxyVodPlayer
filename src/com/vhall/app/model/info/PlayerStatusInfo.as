@@ -26,6 +26,8 @@ package com.vhall.app.model.info
 		public var viewVideoMode:Boolean = true;
 		/**视频起始跳转时间*/
 		private var seekPosition:Number = 0;
+
+		public var videoMode:int = 0;
 	}
 }
 
