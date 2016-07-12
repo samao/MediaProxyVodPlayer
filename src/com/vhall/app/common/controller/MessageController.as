@@ -23,10 +23,12 @@ package com.vhall.app.common.controller
 		override protected function initController():void
 		{
 			// 注册接收的回调
-			Logger.getLogger("message init").info("initController");
+			Logger.getLogger("INIT").info("initController");
 			//注册消息收发
 			MessageManager.getInstance().initWebBridge(new VodWebBridge());
 			MessageManager.getInstance().addWebCallBack("sendMsgToAs");
 		}
 	}
 }
+
+
